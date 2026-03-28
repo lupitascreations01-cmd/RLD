@@ -208,10 +208,8 @@
       'Notes: ' + (notes || 'None')
     );
 
-    window.location.href = 'mailto:contact@rldaudit.com?subject=' + subject + '&body=' + body;
-    setTimeout(function() {
-      window.location.href = '/thank-you';
-    }, 1000);
+    window.open('mailto:contact@rldaudit.com?subject=' + subject + '&body=' + body);
+    window.location.href = '/thank-you';
   });
 </script>
 </body>
