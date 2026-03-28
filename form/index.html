@@ -116,7 +116,6 @@
       <!-- Web3Forms config -->
       <input type="hidden" name="access_key" value="2a5a1830-5650-4e99-a324-8e0081ce8750">
       <input type="hidden" name="subject" value="New Audit Request — RLD">
-      <input type="hidden" name="redirect" value="https://rldaudit.com/thank-you">
       <input type="hidden" name="from_name" value="RLD Audit Form">
 
       <div class="field">
@@ -181,10 +180,17 @@
         <textarea id="notes" name="notes" placeholder="Any context about your data or systems…"></textarea>
       </div>
 
-      <button type="submit" class="btn-submit">Request audit</button>
+      <button type="submit" class="btn-submit" id="submitBtn">Request audit</button>
 
     </form>
   </div>
 </div>
+  <script>
+  document.querySelector('form').addEventListener('submit', function() {
+    setTimeout(function() {
+      window.location.href = '/thank-you';
+    }, 800);
+  });
+</script>
 </body>
 </html>
