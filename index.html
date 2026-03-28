@@ -1,794 +1,239 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RLD — Revenue Leak Detection</title>
-  <meta name="description" content="We analyze your CRM, billing, and payment data to detect revenue loss companies typically miss — without integrations or system access. Results in 72h." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --navy:        #0c1928;
-      --navy-dark:   #060d16;
-      --teal:        #2bbfaa;
-      --teal-hover:  #25aa97;
-      --light-bg:    #e6edf7;
-      --white:       #ffffff;
-      --text-dark:   #1a1a2e;
-      --text-mid:    #444;
-      --text-light:  #667;
-      --pricing-card:#3e4f62;
-      --font: 'Inter', system-ui, sans-serif;
+<!doctype html><html lang="es" ><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="HandheldFriendly" content="true" /><title></title><link rel="shortcut icon" href=""  type="image/x-icon"><link rel="preconnect" href="https://assetslp.link" /><link rel="preconnect" href="https://styles.assets-landingi.com" /><link rel="preconnect" href="https://fonts.assets-landingi.com" /><link rel="preconnect" href="https://scripts.assets-landingi.com" /><link rel="preconnect" href="https://images.assets-landingi.com" /><link rel="preconnect" href="https://cdn.lugc.link" /><link rel="dns-prefetch" href="https://fonts.googleapis.com" /><link rel="dns-prefetch" href="https://fonts.gstatic.com" /><link rel="dns-prefetch" href="https://icons.assets-landingi.com" /><link rel="dns-prefetch" href="https://www.googletagmanager.com" /><link rel="dns-prefetch" href="https://tagmanager.landingi.io" /><link rel="dns-prefetch" href="https://lightboxes.landingi.com" /><link rel="dns-prefetch" href="https://old.assets-landingi.com" /><link rel="dns-prefetch" href="https://popups.landingi.com" /><link rel="preload" href="/assets/js/landend/frodo.js" as="script"><link rel="preload" href="https://ucarecdn.com/libs/blinkloader/3.x/blinkloader.min.js" as="script"><link rel="preload" href="https://assetslp.link/assets/js/landend/lazysizes.min.js?v=11122024151600" as="script">
+<link rel="preload" fetchpriority="high" media="(min-width: 764px)" as="image" href="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/86x68/-/format/auto/"><link rel="preload" fetchpriority="high" media="(max-width: 763px) and ((-webkit-max-device-pixel-ratio: 1.9) or (max-resolution: 1.9dppx))" as="image" href="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/61x48/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (max-width: 959px) and (max-aspect-ratio: 3168/1344)" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/959x/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 960px) and (max-width: 1024px) and (max-aspect-ratio: 3168/1344)" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1024x/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 1025px) and (max-width: 1200px) and (max-aspect-ratio: 3168/1344)" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1200x/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 1201px) and (max-width: 1500px) and (max-aspect-ratio: 3168/1344)" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1500x/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 1501px) and (max-width: 1800px) and (max-aspect-ratio: 3168/1344)" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1800x/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 1801px) and (max-width: 2999px) and (max-aspect-ratio: 3168/1344)" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/2999x/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 3000px) and (max-aspect-ratio: 3168/1344)" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (max-height: 800px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x800/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (min-height: 801px) and (max-height: 962px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x962/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (min-height: 963px) and (max-height: 1080px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1080/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (min-height: 1081px) and (max-height: 1280px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1280/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (min-height: 1281px) and (max-height: 1440px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1440/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (min-height: 1441px) and (max-height: 1920px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1920/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (min-height: 1921px) and (max-height: 2159px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x2159/-/format/auto/"><link rel="preload" fetchpriority="high" media="(min-width: 764px) and (min-height: 2160px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344))" as="image" href="https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/format/auto/"><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=9kFscyeRpdRdQYOIU8ZYlSSgN5XdcU7_0pTLPfGzXb6b65xrvU7d1MzRuGDiS_81" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly93d3cucmxkYXVkaXQuY29tLw"/><script fetchpriority="high">
+   (function(src, cb) {
+    var s = document.createElement('script'); s.setAttribute('src', src); s.setAttribute('fetchpriority', 'high');
+    s.onload = cb; (document.head || document.body).appendChild(s);
+  })('https://ucarecdn.com/libs/blinkloader/3.x/blinkloader.min.js', function() {
+    window.Blinkloader.optimize({
+      fadeIn:false,
+      lazyload:true,
+      smartCompression:true,
+      responsive:true,
+      retina:true,
+      webp:true,
+      pubkey:'ca6af56c901b93c58ffa',
+      cdnBase:'https://cdn.lugc.link'
+    });
+    
+    if (window.location !== window.parent.location) {
+        window.onload = function() {
+            setTimeout(function () {
+                window.dispatchEvent(new CustomEvent('scroll'))
+            }, 500);
+        };
     }
+  })
+</script>
+<style>@media (min-width: 764px) and (max-width: 959px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/959x/-/format/auto/");}} @media (min-width: 960px) and (max-width: 1024px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1024x/-/format/auto/");}} @media (min-width: 1025px) and (max-width: 1200px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1200x/-/format/auto/");}} @media (min-width: 1201px) and (max-width: 1500px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1500x/-/format/auto/");}} @media (min-width: 1501px) and (max-width: 1800px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1800x/-/format/auto/");}} @media (min-width: 1801px) and (max-width: 2999px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/2999x/-/format/auto/");}} @media (min-width: 3000px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/format/auto/");}} @media (min-width: 764px) and (max-height: 800px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x800/-/format/auto/");}} @media (min-width: 764px) and (min-height: 801px) and (max-height: 962px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x962/-/format/auto/");}} @media (min-width: 764px) and (min-height: 963px) and (max-height: 1080px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1080/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1081px) and (max-height: 1280px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1280/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1281px) and (max-height: 1440px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1440/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1441px) and (max-height: 1920px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1920/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1921px) and (max-height: 2159px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x2159/-/format/auto/");}} @media (min-width: 764px) and (min-height: 2160px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/format/auto/");}}</style><style>@media (min-width: 764px) and (max-width: 959px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/959x/-/format/auto/");}} @media (min-width: 960px) and (max-width: 1024px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1024x/-/format/auto/");}} @media (min-width: 1025px) and (max-width: 1200px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1200x/-/format/auto/");}} @media (min-width: 1201px) and (max-width: 1500px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1500x/-/format/auto/");}} @media (min-width: 1501px) and (max-width: 1800px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1800x/-/format/auto/");}} @media (min-width: 1801px) and (max-width: 2999px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/2999x/-/format/auto/");}} @media (min-width: 3000px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/format/auto/");}} @media (min-width: 764px) and (max-height: 800px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x800/-/format/auto/");}} @media (min-width: 764px) and (min-height: 801px) and (max-height: 962px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x962/-/format/auto/");}} @media (min-width: 764px) and (min-height: 963px) and (max-height: 1080px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1080/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1081px) and (max-height: 1280px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1280/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1281px) and (max-height: 1440px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1440/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1441px) and (max-height: 1920px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1920/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1921px) and (max-height: 2159px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x2159/-/format/auto/");}} @media (min-width: 764px) and (min-height: 2160px) and (max-aspect-ratio: 1504/672) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/format/auto/");}}</style><style>@media (max-width: 763px) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/70ad2405-5555-45ee-9d83-1e65f6928763/-/stretch/off/-/resize/763x/-/format/auto/");}}</style><style>@media (min-width: 764px) and (max-width: 959px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/959x/-/format/auto/");}} @media (min-width: 960px) and (max-width: 1024px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1024x/-/format/auto/");}} @media (min-width: 1025px) and (max-width: 1200px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1200x/-/format/auto/");}} @media (min-width: 1201px) and (max-width: 1500px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1500x/-/format/auto/");}} @media (min-width: 1501px) and (max-width: 1800px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1800x/-/format/auto/");}} @media (min-width: 1801px) and (max-width: 2999px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/2999x/-/format/auto/");}} @media (min-width: 3000px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/format/auto/");}} @media (min-width: 764px) and (max-height: 800px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x800/-/format/auto/");}} @media (min-width: 764px) and (min-height: 801px) and (max-height: 962px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x962/-/format/auto/");}} @media (min-width: 764px) and (min-height: 963px) and (max-height: 1080px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1080/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1081px) and (max-height: 1280px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1280/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1281px) and (max-height: 1440px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1440/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1441px) and (max-height: 1920px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1920/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1921px) and (max-height: 2159px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x2159/-/format/auto/");}} @media (min-width: 764px) and (min-height: 2160px) and (max-aspect-ratio: 1504/672) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/format/auto/");}}</style><style>@media (max-width: 763px) { #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/70ad2405-5555-45ee-9d83-1e65f6928763/-/stretch/off/-/resize/x593/-/format/auto/");}}</style><style>@media (min-width: 764px) and (max-width: 959px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/959x/-/format/auto/");}} @media (min-width: 960px) and (max-width: 1024px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1024x/-/format/auto/");}} @media (min-width: 1025px) and (max-width: 1200px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1200x/-/format/auto/");}} @media (min-width: 1201px) and (max-width: 1500px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1500x/-/format/auto/");}} @media (min-width: 1501px) and (max-width: 1800px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1800x/-/format/auto/");}} @media (min-width: 1801px) and (max-width: 2999px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/2999x/-/format/auto/");}} @media (min-width: 3000px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/format/auto/");}} @media (min-width: 764px) and (max-height: 800px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x800/-/format/auto/");}} @media (min-width: 764px) and (min-height: 801px) and (max-height: 962px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x962/-/format/auto/");}} @media (min-width: 764px) and (min-height: 963px) and (max-height: 1080px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1080/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1081px) and (max-height: 1280px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1280/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1281px) and (max-height: 1440px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1440/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1441px) and (max-height: 1920px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x1920/-/format/auto/");}} @media (min-width: 764px) and (min-height: 1921px) and (max-height: 2159px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/x2159/-/format/auto/");}} @media (min-width: 764px) and (min-height: 2160px) and (max-aspect-ratio: 1504/672) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/format/auto/");}}</style><style>@media (max-width: 763px) { #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section:not(.lazyload) { background-image: url("https://cdn.lugc.link/70ad2405-5555-45ee-9d83-1e65f6928763/-/stretch/off/-/resize/763x/-/format/auto/");}}</style>
+<link rel="preload" href="https://assetslp.link/assets/js/landend/jquery-3-6-0.min.js" as="script"><link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext&display=swap" type="text/css" rel="preload" as="style" fetchpriority="high" onload="this.onload=null;this.rel='stylesheet'"><link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i&subset=latin,latin-ext&display=swap" type="text/css" rel="preload" as="style" fetchpriority="high" onload="this.onload=null;this.rel='stylesheet'"><link href="https://styles.assets-landingi.com/assets/css/170325-landend-base.css" type="text/css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><link href="https://styles.assets-landingi.com/cd7cvCymYDNDc13O/base.css" type="text/css" rel="stylesheet"><script>
+    var landingiInternalDetails = {
+        'landing_id': '2017581',
+        'landing_hash': '66591c7a8ab2e4278d35',
+        'landing_variant_hash': '',
+        'landing_name': 'RLD',
+        'landing_lang': 'es',
+        'account_uuid': '1f118bf8-9181-6e5c-b60a-dbaf0ba3d7d3',
+        'apikey': 'cb78dc17-7f8a-4d4d-bf40-7fef38894c05'
+   }
+</script><script>
+(async function (w, d) {
+    try {
+        const response = await w.fetch(
+            'https://' + 'tagmanager.landingi.io' + '/account/' + '1f118bf8-9181-6e5c-b60a-dbaf0ba3d7d3'
+        );
+        const gtm = await response.json();
 
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-dark);
-      background: var(--light-bg);
-      -webkit-font-smoothing: antialiased;
+        if (gtm) {
+            const script = d.head.getElementsByTagName('script')[0];
+            const tmpl = d.createElement('template');
+            tmpl.innerHTML = gtm;
+            tmpl.content.childNodes.forEach((node) => {
+                let elem = node;
+
+                if ('SCRIPT' === node.nodeName) {
+                    elem = d.createElement('script');
+
+                    if (node.textContent) {
+                        elem.textContent = node.textContent;
+                    }
+
+                    if (node.src) {
+                        elem.src = node.src;
+                        elem.type = node.type;
+                    }
+
+                    script.parentNode.insertBefore(elem, script);
+                }
+
+                if ('STYLE' === node.nodeName) {
+                    elem = d.createElement('style');
+
+                    if (node.textContent) {
+                        elem.textContent = node.textContent;
+                    }
+
+                    script.parentNode.insertBefore(elem, script);
+                }
+            })
+        }
+    } catch (err) {
+        console.log(err);
     }
-
-    /* ── NOTICE BAR ── */
-    .notice-bar {
-      background: #060d16;
-      text-align: center;
-      padding: 10px 20px;
-      font-size: 13px;
-      color: #8aabcc;
-      letter-spacing: 0.01em;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 72px 20px 88px;
-      text-align: center;
-      background: #030810;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(3, 8, 16, 0.52);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-logo {
-      position: relative;
-      z-index: 1;
-      margin-bottom: 48px;
-    }
-
-    .hero h1 {
-      position: relative;
-      z-index: 1;
-      font-size: clamp(26px, 4.5vw, 44px);
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.15;
-      max-width: 640px;
-      margin: 0 auto 20px;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-sub {
-      position: relative;
-      z-index: 1;
-      font-size: 15px;
-      color: #a8bdd4;
-      max-width: 480px;
-      margin: 0 auto 36px;
-      font-weight: 300;
-    }
-
-    .btn-teal {
-      position: relative;
-      z-index: 1;
-      display: inline-block;
-      background: var(--teal);
-      color: #fff;
-      font-family: var(--font);
-      font-weight: 600;
-      font-size: 15px;
-      padding: 14px 40px;
-      border-radius: 6px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-      box-shadow: 0 4px 18px rgba(43,191,170,0.35);
-    }
-    .btn-teal:hover {
-      background: var(--teal-hover);
-      box-shadow: 0 6px 24px rgba(43,191,170,0.45);
-      transform: translateY(-1px);
-    }
-
-    .hero-checks {
-      position: relative;
-      z-index: 1;
-      margin-top: 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
-    .hero-checks p      { font-size: 13px; color: #a0b8cc; }
-    .hero-checks .findings { font-size: 13px; color: #c8daea; margin-bottom: 4px; }
-
-    /* ── LIGHT SECTIONS ── */
-    .light-section {
-      background: var(--light-bg);
-      padding: clamp(56px, 7vw, 96px) clamp(20px, 5vw, 80px);
-    }
-
-    .section-title {
-      font-size: clamp(22px, 3vw, 32px);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
-    }
-
-    .section-sub {
-      text-align: center;
-      color: var(--text-light);
-      font-size: 14px;
-      margin-bottom: 48px;
-    }
-
-    /* ── 3-COL ── */
-    .three-col {
-      max-width: 960px;
-      margin: 56px auto 0;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 48px;
-    }
-
-    .col-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      position: relative;
-      padding-left: 13px;
-    }
-    .col-title::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 3px; bottom: 3px;
-      width: 2px;
-      background: var(--teal);
-    }
-
-    .col-note {
-      font-size: 13px;
-      color: var(--text-light);
-      font-style: italic;
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-
-    .col-body {
-      font-size: 14px;
-      color: var(--text-mid);
-      line-height: 2;
-    }
-
-    /* ── HOW IT WORKS ── */
-    .how-cards {
-      max-width: 960px;
-      margin: 52px auto 32px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .how-card {
-      background: var(--white);
-      border-radius: 14px;
-      padding: 44px 28px 40px;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.06);
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .how-card:hover {
-      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
-      transform: translateY(-2px);
-    }
-
-    .how-icon { width: 44px; height: 44px; margin: 0 auto 20px; }
-
-    .how-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
-    .how-card p  { font-size: 13px; color: var(--text-light); line-height: 1.5; }
-
-    .how-note {
-      text-align: center;
-      font-size: 13.5px;
-      color: var(--text-mid);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* ── PRICING ── */
-    .pricing-card {
-      background: var(--pricing-card);
-      border-radius: 14px;
-      padding: 48px 52px;
-      max-width: 580px;
-      margin: 0 auto;
-      color: #e0eaf4;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    }
-
-    .pricing-header {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-    .pricing-label  { font-size: 14px; font-weight: 600; color: #a8bdd4; }
-    .pricing-amount { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
-
-    .pricing-recover {
-      font-size: 13px;
-      color: #ffffff;
-      margin-bottom: 24px;
-      font-style: italic;
-    }
-
-    .pricing-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .pricing-list li {
-      font-size: 13.5px;
-      color: #c0d4e4;
-      padding-left: 18px;
-      position: relative;
-      line-height: 1.5;
-    }
-    .pricing-list li::before        { content: '-'; position: absolute; left: 0; color: #8aabcc; }
-    .pricing-list li.highlight::before { content: '|'; color: var(--teal); }
-
-    .pricing-ext {
-      font-size: 13px;
-      color: var(--text-mid);
-      margin-top: 22px;
-      text-align: center;
-    }
-    .pricing-ext::before { content: '→ '; }
-
-    /* ── SECURITY ── */
-    .security-card {
-      background: var(--white);
-      border-radius: 16px;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 52px 56px;
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 52px;
-      align-items: center;          /* vertically center both cols */
-      box-shadow: 0 3px 20px rgba(0,0,0,0.09);
-    }
-
-    .security-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .security-left h2 {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-    }
-    .security-left p { font-size: 13.5px; color: var(--text-light); }
-
-    .security-right .top-note { font-size: 14px; color: var(--text-mid); margin-bottom: 16px; }
-
-    .security-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      margin-bottom: 20px;
-    }
-    .security-list li {
-      font-size: 13.5px;
-      color: var(--text-mid);
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-    .security-list li::before { content: '•'; color: var(--text-mid); flex-shrink: 0; }
-
-    .security-bottom { font-size: 13px; color: var(--text-light); font-style: italic; }
-
-    /* ── WHY RLD ── */
-    .why-stack {
-      max-width: 660px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .why-item {
-      background: var(--white);
-      border-radius: 12px;
-      padding: 20px 30px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      transition: box-shadow 0.2s;
-    }
-    .why-item:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.12); }
-    .why-item h3 { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
-    .why-item p  { font-size: 13.5px; color: var(--text-mid); }
-
-    .analyst-text {
-      text-align: center;
-      font-size: 14px;
-      color: var(--text-mid);
-      max-width: 560px;
-      margin: 36px auto 0;
-      line-height: 1.7;
-    }
-
-    /* ── CTA ── */
-    .cta-section {
-      background: var(--light-bg);
-      padding: clamp(48px, 6vw, 80px) 20px clamp(56px, 7vw, 88px);
-      text-align: center;
-    }
-
-    .check-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 36px;       /* was pushed down, now brought up */
-    }
-    .check-list li { font-size: 14px; color: var(--text-mid); }
-    .check-list li::before { content: '✓ '; color: var(--text-dark); font-weight: 600; }
-
-    .cta-section h2 {
-      font-size: clamp(20px, 2.5vw, 28px);
-      font-weight: 700;
-      margin-bottom: 28px;
-      letter-spacing: -0.02em;
-    }
-    .cta-note { margin-top: 14px; font-size: 13px; color: var(--text-light); }
-
-    /* ── FAQ ── */
-    .faq-section {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(60px, 7vw, 100px) clamp(20px, 5vw, 80px);
-    }
-
-    /* Footer wave bg used here and in footer */
-    .faq-section::before,
-    footer::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #0c1928;
-      z-index: 0;
-    }
-
-    .faq-wave-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .faq-inner {
-      position: relative;
-      z-index: 2;
-    }
-
-    .faq-section .section-title { color: #fff; margin-bottom: 44px; }
-
-    .faq-grid {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .faq-item {
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
-      transition: border-color 0.2s;
-    }
-    .faq-item:hover { border-color: rgba(255,255,255,0.3); }
-
-    .faq-q {
-      width: 100%;
-      background: rgba(255,255,255,0.05);
-      border: none;
-      color: #e0eaf4;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 500;
-      text-align: left;
-      padding: 18px 20px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      transition: background 0.2s;
-    }
-    .faq-q:hover { background: rgba(255,255,255,0.08); }
-
-    .faq-arrow {
-      color: #8aabcc;
-      font-size: 18px;
-      transition: transform 0.25s;
-      flex-shrink: 0;
-      display: inline-block;
-    }
-    .faq-item.open .faq-arrow { transform: rotate(180deg); }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease;
-    }
-    .faq-item.open .faq-a { max-height: 240px; }
-
-    .faq-a-inner {
-      padding: 4px 20px 20px;
-      font-size: 13.5px;
-      color: #8aabcc;
-      line-height: 1.75;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      position: relative;
-      overflow: hidden;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 32px clamp(20px, 5vw, 80px);
-      text-align: center;
-    }
-
-    .footer-inner {
-      position: relative;
-      z-index: 2;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-bottom: 12px;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: #8aabcc;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: #c8daea; }
-
-    .footer-copy { font-size: 12px; color: #4a6a88; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 720px) {
-      .three-col         { grid-template-columns: 1fr; gap: 32px; margin-top: 40px; }
-      .how-cards         { grid-template-columns: repeat(2, 1fr); }
-      .security-card     { grid-template-columns: 1fr; padding: 36px 28px; gap: 28px; }
-      .faq-grid          { grid-template-columns: 1fr; }
-      .pricing-card      { padding: 28px 24px; }
-    }
-    @media (max-width: 440px) {
-      .how-cards { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- NOTICE BAR -->
-<div class="notice-bar">Most billing leaks go unnoticed for 2+ years before someone looks.</div>
-
-<!-- HERO -->
-<section class="hero">
-  <!-- Hero background image -->
-  <img src="hero-bg.jpg" class="hero-bg" alt="" style="object-fit:cover;" />
-
-  <!-- Logo -->
-  <div class="hero-logo">
-    <img
-      src="logo.png"
-      alt="RLD logo"
-      style="width:100px; height:auto; mix-blend-mode: screen; opacity:0.95;"
-    />
-  </div>
-
-  <h1>Hidden revenue leaks cost mid-market companies $500K/year. We find yours in 72h.</h1>
-  <p class="hero-sub">We analyze your CRM, billing, and payment data to detect revenue loss companies typically miss — without integrations or system access.</p>
-
-  <a class="btn-teal" href="/cdn-cgi/l/email-protection#22414d4c5643415662504e464357464b560c414d4f">Request audit</a>
-
-  <div class="hero-checks">
-    <p class="findings">Typical findings: 3–12% recoverable revenue</p>
-    <p>✓ No integrations required</p>
-    <p>✓ Results in 72h</p>
-  </div>
-</section>
-
-<!-- FROM HIDDEN ERRORS -->
-<section class="light-section">
-  <h2 class="section-title">From hidden errors to measurable recovery</h2>
-  <div class="three-col">
-
-    <div>
-      <div class="col-title">The problem</div>
-      <p class="col-note">Most leaks happen without anyone noticing.</p>
-      <div class="col-body">
-        Companies lose money without realizing it:<br><br>
-        - Customers paying less<br>
-        - MRR errors<br>
-        - Duplicate charges<br>
-        - Unrecorded churn<br>
-        - Incorrectly applied discounts<br><br>
-        These errors accumulate and directly impact growth
-      </div>
+})(window, document);
+</script><script>
+window.lazySizesConfig = window.lazySizesConfig || {};
+window.lazySizesConfig.init = false;
+</script>
+<script data-cookieconsent="ignore" type="text/javascript" src="https://assetslp.link/assets/js/landend/lazysizes.min.js?v=11122024151600"></script>
+<script>
+lazySizes.init();
+</script><script defer fetchpriority="low" src="https://popups.landingi.com/api/v3/landing/install-code?apikey=cb78dc17-7f8a-4d4d-bf40-7fef38894c05&landing=66591c7a8ab2e4278d35"></script><script defer fetchpriority="low" src="https://scripts.assets-landingi.com/landend/190825/lightbox-render.js?v=1773605076"></script><script>
+window.addEventListener('load', function () {
+    LightboxRender.init({
+        useAaf: true
+    })
+});
+</script></head><body id="TxvpQxGuo6CkxW3pseVeXnPkXz3TAWhR" >
+<div id="T3wqS6u3vovRMkWRr67DDSPhFmCBes6E" class="widget widget-section  "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="cciMwShlc92SyRhd0QeXeXL3K1oGctya" class="widget widget-text"><p>Hidden revenue leaks cost mid-market companies $500K/year. We find yours in 72h.</p></div><div id="lLqfxcfX4QBZ53Uv06Wb0EMoNWDd72LX" class="widget widget-text"><p>We analyze your CRM, billing, and payment data to detect revenue loss companies typically miss — without integrations or system access.</p></div><div id="q8wsoBn5tn0OHCwG5XqvnZfTDVUfZQSZ" class="widget widget-text"><p>Most billing leaks go unnoticed for 2+ years before someone looks.</p></div><div id="ks2kvrPg0aHh9qTuLCVAa5aQUNBPfVfO" class="widget widget-text"><p>Typical findings: 3–12% recoverable revenue</p><p>✔ No integrations required</p><p>✔ Results in 72h</p></div><div id="xUsDUHD1JZwQeVdlooyVZJW94WWyCzq2" class="widget widget-box" ></div><a href="/button/lJcZPTSlXa0xBuFz8N1Si0LdDglWTgJn" id="lJcZPTSlXa0xBuFz8N1Si0LdDglWTgJn" class="widget widget-button"   version="3" subtype="landingpage" target="_blank" rel="noopener noreferrer" data-origin-label="Request audit"   >
+    <div class="widget-overlay"></div>
+    <div id="puqV3Md0371mBAGPQFGQfs4RNgXOLQWG" class="widget widget-text" >Request audit</div>
+</a><img id="DOJSkTvVkkITofFqX5J5OqMisHn9RAsb"
+        data-original="https://images.assets-landingi.com/uc/225be6fe-a3c6-440b-933f-1ca031ab16ff/logo_white.crop_787x637_422,0.png"
+        class="widget widget-image "
+        srcset="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/61x48/-/format/auto/ 61w,  https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/86x68/-/format/auto/ 86w" sizes="(max-width: 763px) 61px,   86px" src="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/61x48/-/format/auto/"
+        
+        alt=""
+         width="86" height="68" 
+        
+        fetchpriority="high"
+    >
+        </div>
     </div>
-
-    <div>
-      <div class="col-title">What we analyze</div>
-      <div class="col-body">
-        - Billing inconsistencies<br>
-        - MRR errors<br>
-        - Irregular payment cycles<br>
-        - Unrecorded churn<br>
-        - Duplicate charges<br>
-        - Leaks in upgrades/downgrades<br>
-        - Incorrectly allocated commission
-      </div>
+</div>
+<div id="MhFHkQL4JVGgOartwIxraPrdXCzPBba9" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="PdwDS3TeQvUHcLTiPQ4qAvzOypNpqq1m" class="widget widget-text"><p>The problem</p></div><div id="x4orR3QeMiuBquw3duucwWLAgcsaPZ3x" class="widget widget-text"><p>Companies lose money without realizing it:</p><p><br></p><p>- Customers paying less</p><p>- MRR errors</p><p>- Duplicate charges</p><p>- Unrecorded churn</p><p>- Incorrectly applied discounts</p><p><br></p><p>These errors accumulate and directly impact growth</p></div><div id="uHIh0iM7RGQ8bFIpeVInxFXnM9R3OXCt" class="widget widget-text"><h1>From hidden errors to measurable recovery</h1></div><div id="KgyDvTs2p7MGPLaXdVLn6yfC9w610BzK" class="widget widget-text"><p>Most leaks happen without anyone noticing.</p></div><div id="fxXwOugIRkw7x9J3TwO2KiAC6Um9t8IW" class="widget widget-text"><p>What we analyze</p></div><div id="qUiiktza9rCPAgI2S1Dw1dAQyCprmBSE" class="widget widget-text"><p>- Billing inconsistencies</p><p>- MRR errors</p><p>- Irregular payment<span style=""> cycles</span></p><p><span style="">- Unrecorded churn</span></p><p><span style="">- Duplicate charges</span></p><p><span style="">- Leaks in upgrades/downgrades</span></p><p><span style="">- Incorrectly allocated commission</span></p></div><div id="EzVJZQnDd3a0WoFriuwmbbspAct4vp9d" class="widget widget-text"><p>What you receive</p></div><div id="rBcmICtKs183L75DlDlrJa2ZC3I7RbP5" class="widget widget-text"><p>All presented in a simple and actionable report:</p><p><br></p><p>- Leaks detected</p><p>- Estimated recoverable amount</p><p>- Impact analysis</p><p>- Practical recommendations</p><p>- Remediation roadmap</p><p>- Premium PDF report</p></div>
+        </div>
     </div>
-
-    <div>
-      <div class="col-title">What you receive</div>
-      <p class="col-note">All presented in a simple and actionable report:</p>
-      <div class="col-body">
-        - Leaks detected<br>
-        - Estimated recoverable amount<br>
-        - Impact analysis<br>
-        - Practical recommendations<br>
-        - Remediation roadmap<br>
-        - Premium PDF report
-      </div>
+</div>
+<div id="oGrTBQ0A6d4wxRMsfsEellKNvQvePMcv" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="PMD1mtmnRREEaanDllqfGGT7qzTKOlDm" class="widget widget-text"><p>How it works</p></div>
+        </div>
     </div>
-
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="light-section" style="padding-top:0;">
-  <h2 class="section-title">How it works</h2>
-  <div class="how-cards">
-
-    <div class="how-card">
-      <svg class="how-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="9" y="5" width="20" height="30" rx="2" stroke="#1a1a2e" stroke-width="2" fill="none"/>
-        <rect x="13" y="9" width="4" height="4" rx="1" fill="#1a1a2e"/>
-        <line x1="20" y1="11" x2="25" y2="11" stroke="#1a1a2e" stroke-width="1.5"/>
-        <line x1="13" y1="18" x2="25" y2="18" stroke="#1a1a2e" stroke-width="1.5"/>
-        <line x1="13" y1="23" x2="25" y2="23" stroke="#1a1a2e" stroke-width="1.5"/>
-        <line x1="13" y1="28" x2="20" y2="28" stroke="#1a1a2e" stroke-width="1.5"/>
-      </svg>
-      <h3>Send us your information</h3>
-      <p>Company, contact and context</p>
+</div>
+<div id="Fg8Uy5WTXzQmdqAIXHms0ZaTTArpkoau" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="dUoIU6vXIvnq3THCK7HZK55TbOTx945f" class="widget widget-box" ></div><img src="https://icons.assets-landingi.com/icon_85028b9d01b640fb5ec5e2704cb50b5a.svg" id="BUvEfxqatRO9kL3t3TdwenZKTuuFDES6" class="widget widget-svgicon" alt="" /><div id="mXTtaUXzAz2zQy43NcsCNTJg1cQ2wLz5" class="widget widget-text"><p>Send us your information</p></div><div id="OoaoPlVPnC8KxbKqCMNAU3DZv1nWHzVv" class="widget widget-text"><p>Company, contact and context</p></div><div id="rpior2wEpSqV61dw01UdAxwqxHTKukkB" class="widget widget-box" ></div><div id="eH9CyTptQT4I77VpmM6eCnq4myXAitJf" class="widget widget-text"><p>Contracts, CRM, billing</p></div><div id="lqf3tvQoJQDX5RmnwOzFF256Hqqf6oT4" class="widget widget-text"><p>Upload your files</p></div><img src="https://icons.assets-landingi.com/icon_d6d14b7bda8dd4b4b4adbb84b9049c95.svg" id="grRVDx6TyTz80gU696XJ6UEmOANHNhLf" class="widget widget-svgicon" alt="" /><div id="C1PqXAr3nemULLAul26JHgU0aDFLuIxo" class="widget widget-box" ></div><div id="nfTBsnqXTTbm2qhnSyseOHMdi92mChgi" class="widget widget-text"><p>We detect real leaks</p></div><div id="w0vWfb1rH3afoH674GqzIXH8H1T61yV0" class="widget widget-text"><p>Analysis</p></div><img src="https://icons.assets-landingi.com/icon_6f342fcbd3ff0bfd938351f5dbf0db14.svg" id="PxIdHe7s2Cw5tuU3lS8VCAxwQDTD1a0b" class="widget widget-svgicon" alt="" /><div id="qyW6rzT6uiPbN5PlTmJ6csXkWiSwbI79" class="widget widget-box" ></div><div id="GtRKt9mGQpSmFZXgUATy7k7UEJ7NJgq3" class="widget widget-text"><p>Results in 72 hours</p></div><div id="OgzsycH0u4ZtwDcPPdXISbSdTQuuGmNZ" class="widget widget-text"><p>Executive report</p></div><img src="https://icons.assets-landingi.com/icon_8da4d47816bdc4208892f8976149f273.svg" id="hu3VHr81qxlUCKkwCmmGxSAaBkC0WdGm" class="widget widget-svgicon" alt="" /><div id="kXk8qr0UwB5oIWSZ4yZiZ2oF6HKe63J6" class="widget widget-text"><h2>Fully async. No calls, no integrations, no waiting rooms. Just your files and your report. </h2></div>
+        </div>
     </div>
-
-    <div class="how-card">
-      <svg class="how-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22 28 L22 10" stroke="#1a1a2e" stroke-width="2" stroke-linecap="round"/>
-        <path d="M15 17 L22 10 L29 17" stroke="#1a1a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M10 30 L10 36 L34 36 L34 30" stroke="#1a1a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h3>Upload your files</h3>
-      <p>Contracts, CRM, billing</p>
+</div>
+<div id="BUkElZXCofnrIc41J2ehO1dsLi5X5FR5" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="RbGy0h93gryiW8Adkvzc9onxNTTZEoyQ" class="widget widget-text"><p>- Comprehensive analysis of your last 8–12 weeks (up to 90 days)</p><p>- Review of billing, CRM, payment gateways, and subscriptions</p><p>- Detection of revenue leaks: chargebacks, hidden churn, uncharged upgrades, sync errors, etc.</p><p>- Executive PDF report with findings, evidence, and calculations</p><p>- Actionable recovery recommendations</p><p>- Delivered within 72 hours</p></div><div id="t4BsQ0SzrA8ucNcNfx9IsC5fXVfHUHXN" class="widget widget-text"><p>Revenue Audit from</p></div><div id="czV9iT1VvJTPqG3tx36QnDVPZqUh9qyP" class="widget widget-box" ></div><div id="As82phh2xyQoOcfmQuIlT9ZGqxXlFHNT" class="widget widget-text"><p>$899 USD</p></div><div id="WTPTIfwirftMvnL5FbdShEnIbLxse0Zo" class="widget widget-text"><p>Companies typically recover 3–12% of annual revenue after their first audit </p></div><div id="Dcs01LHZmX3Q6JZaUlXXXNZTENqXd4Or" class="widget widget-text"><h2>Pricing</h2></div><div id="X1TOZMPsgiIoJQw67vXvtwWLG1l7rAHZ" class="widget widget-text"><p>One audit. Full visibility into what you're losing.</p></div><div id="IWxBDsbv4alv8atxk8vpNAFzR3vCFtPT" class="widget widget-text"><ul><li> Extended scope available: 90 days to 12 months. Contact us for pricing.</li></ul></div>
+        </div>
     </div>
-
-    <div class="how-card">
-      <svg class="how-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="11" stroke="#1a1a2e" stroke-width="2" fill="none"/>
-        <line x1="28" y1="28" x2="36" y2="36" stroke="#1a1a2e" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <h3>Analysis</h3>
-      <p>We detect real leaks</p>
+</div>
+<div id="Q9WNCFM2TmmO2RI6T1hzTy5lKfwAIcob" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="RNN0vtkSCcK78OZ0HpSm9TZNMRA9VeNs" class="widget widget-text"><p>Security &amp; Confidentiality</p></div><div id="MOaK15acHho0ckz56hOQnWkR92z8erwP" class="widget widget-text"><p>Designed for sensitive financial data.</p></div><div id="qEZxSaQ8xOHvl3mUeseNluK8frzCT4Wv" class="widget widget-text"><p>Your data remains fully under your control.</p><p><br></p><p>• No system access required</p><p>• No API connections</p><p>• No persistent data storage</p><p>• Files used only for audit purposes</p><p>• Automatic deletion after project completion</p><p>• Restricted internal access</p><p>• Private, manual review process</p><p><br></p><p>We operate under strict internal confidentiality practices.</p></div><div id="mhRvxeLiJqvIfAsIKMVs4hD6rVdQlPEN" class="widget widget-box"  role="presentation"></div><div id="Gss2lweQyRTsm3iJsSihuOqVV1lplDI5" class="widget widget-box"  role="presentation"></div>
+        </div>
     </div>
-
-    <div class="how-card">
-      <svg class="how-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="5" width="28" height="34" rx="2" stroke="#1a1a2e" stroke-width="2" fill="none"/>
-        <polyline points="14,30 19,23 24,26 30,17" stroke="#1a1a2e" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="14" y1="34" x2="30" y2="34" stroke="#1a1a2e" stroke-width="1.5"/>
-      </svg>
-      <h3>Executive report</h3>
-      <p>Results in 72 hours</p>
+</div>
+<div id="b2kBuw0ebqlFul3fDBex2iI2M1DpWWp6" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="mDaFWbcOIsKrDUsug2otulfIDRJNcqv5" class="widget widget-text"><p>Why companies choose RLD</p></div><div id="Q5trorsv3nb5qCpoQ5OGkKA5JerqeQ5i" class="widget widget-box"  role="presentation"></div><div id="SGbSxZv8UrIvtwsQtuusFAm7tlMnRZdQ" class="widget widget-text"><h2>Independent analysis </h2></div><div id="eLzgHnpiSpuB0B60TRguaFkAHU8E5ACu" class="widget widget-text"><p>No software to sell. No integrations required. No long-term contracts. </p></div><div id="oqVOZqTlSXWiFVzdLOIQO82C0euB5tn6" class="widget widget-box"  role="presentation"></div><div id="D11ipwS6mrOmTkubNZJMxnZ8oDzHyIQe" class="widget widget-text"><h2>Specialized focus</h2></div><div id="bpuUcJM9UuWeINTMnC07T6W6n2wNZ2qZ" class="widget widget-text"><p>Built specifically for billing, CRM, and payment revenue leaks. </p></div><div id="Q4yRqlIELP0gMiCrVwDTTR0ILgQNA04t" class="widget widget-box"  role="presentation"></div><div id="kXV828o4BR0TxLRTRcSbrwkPgI8TfQ1M" class="widget widget-text"><h2>Actionable outcomes</h2></div><div id="TJMWHgV2mu9aqTlgK4s8HwwFHsnLqKoa" class="widget widget-text"><p>Every finding includes quantified impact and clear remediation steps. </p></div><div id="aMBy6b6pcuztQDWVu276Etva9OlxH7cz" class="widget widget-text"><p>✓ Analyzes exports from Stripe, HubSpot &amp; Salesforce</p><p>✓ No integrations or system access needed</p><p>✓ Just upload your data — we handle the rest</p></div><div id="Tbni7RBz8SA3MQ5L2FhvCv71DFHKeaeJ" class="widget widget-text"><p>RLD audits are conducted by a revenue analyst with hands-on experience in B2B billing operations and CRM data reconciliation. Every report is reviewed manually — no automated outputs.</p></div>
+        </div>
     </div>
-
-  </div>
-  <p class="how-note">Fully async. No calls, no integrations, no waiting rooms. Just your files and your report.</p>
-</section>
-
-<!-- PRICING -->
-<section class="light-section" style="padding-top:0;">
-  <h2 class="section-title">Pricing</h2>
-  <p class="section-sub">One audit. Full visibility into what you're losing.</p>
-
-  <div class="pricing-card">
-    <div class="pricing-header">
-      <span class="pricing-label">Revenue Audit from</span>
-      <span class="pricing-amount">$899 USD</span>
+</div>
+<div id="MoCT17TQ6yF7ov5gGKq0x6oRDU1AOCTT" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="S62kvasJbFlLU8b8HpI3HSmA3N8z2wG8" class="widget widget-text"><p>Identify lost revenue before it compounds. </p></div><a href="/button/NEe2CtVtaksFFXDG6dTG8lSFBozpPrJx" id="NEe2CtVtaksFFXDG6dTG8lSFBozpPrJx" class="widget widget-button"   version="3" subtype="landingpage" target="_blank" rel="noopener noreferrer" data-origin-label="Request audit"   >
+    <div class="widget-overlay"></div>
+    <div id="iu5p6gUTynRW9WmgSs9dyTrlJpDuBa0b" class="widget widget-text" >Request audit</div>
+</a>
+        </div>
     </div>
-    <p class="pricing-recover">Companies typically recover 3–12% of annual revenue after their first audit</p>
-    <ul class="pricing-list">
-      <li class="highlight">Comprehensive analysis of your last 8–12 weeks (up to 90 days)</li>
-      <li>Review of billing, CRM, payment gateways, and subscriptions</li>
-      <li>Detection of revenue leaks: chargebacks, hidden churn, uncharged upgrades, sync errors, etc.</li>
-      <li>Executive PDF report with findings, evidence, and calculations</li>
-      <li>Actionable recovery recommendations</li>
-      <li>Delivered within 72 hours</li>
-    </ul>
-  </div>
-
-  <p class="pricing-ext">Extended scope available: 90 days to 12 months. Contact us for pricing.</p>
-</section>
-
-<!-- SECURITY -->
-<section class="light-section" style="padding-top:0;">
-  <div class="security-card">
-    <div class="security-left">
-      <h2>Security &amp; Confidentiality</h2>
-      <p>Designed for sensitive financial data.</p>
+</div>
+<div id="dZPKM4MmsmA3tTG5onJhIVr6IoqnlvZC" class="widget widget-section "  >
+    <div class="row">
+        
+        <div class="container " >
+            
+            <div id="sUtCnwNabfbQaIUpsniRvT26p3iCOMwb" class="widget widget-text"><p>Limited spaces due to manual capacity.</p></div>
+        </div>
     </div>
-    <div class="security-right">
-      <p class="top-note">Your data remains fully under your control.</p>
-      <ul class="security-list">
-        <li>No system access required</li>
-        <li>No API connections</li>
-        <li>No persistent data storage</li>
-        <li>Files used only for audit purposes</li>
-        <li>Automatic deletion after project completion</li>
-        <li>Restricted internal access</li>
-        <li>Private, manual review process</li>
-      </ul>
-      <p class="security-bottom">We operate under strict internal confidentiality practices.</p>
+</div>
+<div id="ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB" class="widget widget-section lazyload"  >
+    <div class="row">
+        
+        <div class="container lazyload" >
+            
+            <div id="Vbu8gTfPW8Wf3CoxqQhTbdMpVW2FgL7n" class="widget widget-text"><p>FAQ</p></div>
+        </div>
     </div>
-  </div>
-</section>
-
-<!-- WHY RLD -->
-<section class="light-section" style="padding-top:0;">
-  <h2 class="section-title">Why companies choose RLD</h2>
-  <div class="why-stack" style="margin-top:32px;">
-    <div class="why-item">
-      <h3>Independent analysis</h3>
-      <p>No software to sell. No integrations required. No long-term contracts.</p>
+</div>
+<div id="iNPKTXmrmdID710Xha5MNGtp7zEAdUo7" class="widget widget-section lazyload"  >
+    <div class="row">
+        
+        <div class="container lazyload" >
+            
+            <div id="fwiVwNGaErQ3TXA41I1q6nWNofOt1FxC" class="widget widget-accordion"  data-trigger="heading" data-rotate-trigger=true><div id="VRuUiIzAdhoTn5DyI4VMtaLyeOLzOaGX" class="widget widget-container accordion-element-container"><div id="zbGNT7gX9dKkAHTmO0LmE1fr7SOtTRmG" class="widget widget-container accordion-heading-container"><div id="yMRQTwtG6NddiLagzci3VbdTpuaXoqh6" class="widget widget-text accordion-heading-text"><span>What files can I upload?</span></div><div id="hzCxzqM6khu2kAslJkUETPPz3S0woVF8" class="widget widget-container accordion-trigger"></div></div><div id="WbaUX2gZAbgWfpNy4gv4u3SHtp6WA6iE" class="widget widget-text accordion-desc-text"><span>You can upload PDF reports from your payment platforms, CRM, contracts, billing, or exported dashboards. If your data is in Excel or CSV, you can export it as a PDF and upload it as well.</span></div></div><div id="bgcuzmcp2toSWEXA09Z0xN9ld7oNbdKK" class="widget widget-container accordion-element-container"><div id="Vbokdz9UnREksJIVom1crXBmEffTBrx2" class="widget widget-container accordion-heading-container"><div id="TC5WGvqZdBOnBNis9O1p9hnNsrEMgrFK" class="widget widget-text accordion-heading-text"><span>Do you guarantee results?</span></div><div id="Uu6V6NFlbnBBCPbEaKoTeTZUHT0RQbRK" class="widget widget-container accordion-trigger"></div></div><div id="QsdXqiuw1JH242hGV7auuzSBPT3maS0c" class="widget widget-text accordion-desc-text"><span>We guarantee a professional and thorough audit process. Results depend on data quality and business complexity.</span></div></div><div id="EbrplmgitJm9GpzJ4WRQRrICVy3M0y1T" class="widget widget-container accordion-element-container"><div id="qNuwekGedSHNg3zQglgWNx5mv5O6AgqR" class="widget widget-container accordion-heading-container"><div id="O7BXToRVEtzbsM7wuMLk2IaF4iB6JAr3" class="widget widget-text accordion-heading-text"><span>Can I send more than one file?</span></div><div id="lTxNITcxTFNWTuIJ6hblExVe6rICitsK" class="widget widget-container accordion-trigger"></div></div><div id="sE8B8UtHpcxi5ITDL9wi2AlSnKVHreTs" class="widget widget-text accordion-desc-text"><span>Yes, you can upload multiple ones, as long as they are within the 90-day period.</span></div></div></div><div id="iuaUGm027PQeN6ezdoabDbyI67XQs2TT" class="widget widget-accordion"  data-trigger="heading" data-rotate-trigger=true><div id="IVvzJ4x8vkqhfHoJFdFLrtCTzD43lDgQ" class="widget widget-container accordion-element-container"><div id="knIXR5TyEBdlWFxW3CSAM9iqvAAgyG5u" class="widget widget-container accordion-heading-container"><div id="y607DL32vCbJSz6G9c1LOTyKbhy4Q4XB" class="widget widget-text accordion-heading-text"><span>Is there a size limit?</span></div><div id="Ceb7cC0Um30ic1ywmRxOdHVTWh9xyUhm" class="widget widget-container accordion-trigger"></div></div><div id="c8wZp0UxTSGHmZgkIVJNi9any3IrPXVk" class="widget widget-text accordion-desc-text"><span>Ideally, 80–120 pages per file. If your reports are larger, write to us and we'll give you an extended quote.</span></div></div><div id="fTVHTN4JsPkNXCeuo4TCzRgoTXSJXvW5" class="widget widget-container accordion-element-container"><div id="VILp1WL0u4govXFgOgVgKODkqbEaNWoO" class="widget widget-container accordion-heading-container"><div id="S7r7vKphMTy9RMmevQdG0WLnZO4uuDFA" class="widget widget-text accordion-heading-text"><span>Who performs the analysis?</span></div><div id="qgngxcDa1G27E2IbCF1pLePJKN7OzcNB" class="widget widget-container accordion-trigger"></div></div><div id="JlhJMv0VygNZ3nBp7uCvdDPhiN0DNHNl" class="widget widget-text accordion-desc-text"><span>Every audit is conducted by a specialized revenue analyst with a manual, structured review process. No automated reports.</span></div></div><div id="KRbto37QOVHaK8GIoSfui5fZwuvgMA31" class="widget widget-container accordion-element-container"><div id="R6bP4aSi8iEvMqDRLCcGRCheV6deEknd" class="widget widget-container accordion-heading-container"><div id="C68VexixJZo34TAQOhOtTnnZu7rra2nz" class="widget widget-text accordion-heading-text"><span>How is my information protected?</span></div><div id="rGTAXvoArm7IDnlPpMrRaWruuM3dUxQQ" class="widget widget-container accordion-trigger"></div></div><div id="nxW1Lph820iFsvr0pCT7XMw1gMNaoE3G" class="widget widget-text accordion-desc-text"><span>We do not access your systems. We do not store any data. All your files are deleted upon completion of the report. The process is 100% private and manual.</span></div></div></div>
+        </div>
     </div>
-    <div class="why-item">
-      <h3>Specialized focus</h3>
-      <p>Built specifically for billing, CRM, and payment revenue leaks.</p>
+</div>
+<div id="hJiBrHzTfs7aozm2668WX6ymdLDoMWnb" class="widget widget-section lazyload"  >
+    <div class="row">
+        
+        <div class="container lazyload" >
+            
+            <div id="KCBwufSvIBAKR8s55AqmcByo7DOX3MEc" class="widget widget-text"><h2><a href="https://www.rldaudit.com/terms-of-services" target="_blank" style="color: rgb(255, 255, 255); text-decoration: underline;">Terms of services</a></h2></div><div id="a0IxITq4bHzbck5PZKb8qONK8etolQxX" class="widget widget-text"><h2><a href="https://www.rldaudit.com/privacy-policy" target="_blank" style="color: rgb(255, 255, 255); text-decoration: underline;">Privacy policy</a></h2></div><div id="GGTSsKyAfcFPsQ0pfvp5LyB2kJeOvDSr" class="widget widget-text"><h2>© 2026 RLD — Revenue Leak Detection. All rights reserved.</h2></div>
+        </div>
     </div>
-    <div class="why-item">
-      <h3>Actionable outcomes</h3>
-      <p>Every finding includes quantified impact and clear remediation steps.</p>
-    </div>
-  </div>
-  <p class="analyst-text">RLD audits are conducted by a revenue analyst with hands-on experience in B2B billing operations and CRM data reconciliation. Every report is reviewed manually — no automated outputs.</p>
-  <ul class="check-list" style="margin-top:28px;">
-    <li>Analyzes exports from Stripe, HubSpot &amp; Salesforce</li>
-    <li>No integrations or system access needed</li>
-    <li>Just upload your data — we handle the rest</li>
-  </ul>
-</section>
+</div><script type="text/javascript" src="https://assetslp.link/assets/js/landend/jquery-3-6-0.min.js" fetchpriority="high"></script>        <script src="/assets/js/landend/frodo.js"></script>
+<script>
+const lpStatsModule = (function () {    
+    const url = "https://stats.landingi.com/visit/2017581";
+    const data = {"lid":2017581,"luuid":"6304176d-911b-498c-876a-5b8d9a609530","lhash":"66591c7a8ab2e4278d35","fid":2017581,"auuid":"1f118bf8-9181-6e5c-b60a-dbaf0ba3d7d3","acid":389188,"agid":null,"tid":null,"hasAccessToEventTracker":false,"hasAccessToEventTrackerDev":false,"hasAccessToVisitWithoutCookie":false,"hasAccessToExternalEvents":false};
+    const cookieName = "ls_sid_2017581";
 
-<!-- CTA -->
-<section class="cta-section">
-  <h2>Identify lost revenue before it compounds.</h2>
-  <a class="btn-teal" href="mailto:contact@rldaudit.com">Request audit</a>
-  <p class="cta-note">Limited spaces due to manual capacity.</p>
-</section>
+    if (data.hasAccessToEventTrackerDev) { 
+        console.log('Running runScript in dev mode')
+        frodo.runScriptDev(cookieName, url, data)
+    } else {
+        frodo.runScript(cookieName, url, data)
+    }
 
-<!-- FAQ -->
-<section class="faq-section">
-  <!-- Subtle diagonal bg -->
-  <svg class="faq-wave-bg" viewBox="0 0 1440 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="-50,0 800,0 550,500 -50,500"  fill="rgba(255,255,255,0.018)"/>
-    <polygon points="500,0 1440,0 1440,380 300,500" fill="rgba(255,255,255,0.022)"/>
-    <line x1="0" y1="280" x2="1440" y2="140" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-    <line x1="0" y1="320" x2="1440" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
-    <line x1="0" y1="360" x2="1440" y2="220" stroke="rgba(255,255,255,0.02)" stroke-width="0.8"/>
-  </svg>
-
-  <div class="faq-inner">
-    <h2 class="section-title">FAQ</h2>
-    <div class="faq-grid">
-
-      <div class="faq-item">
-        <button class="faq-q">What files can I upload? <span class="faq-arrow">&#8964;</span></button>
-        <div class="faq-a"><div class="faq-a-inner">You can upload PDF reports from your payment platforms, CRM, contracts, billing, or exported dashboards. If your data is in Excel or CSV, you can export it as a PDF and upload it as well.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Is there a size limit? <span class="faq-arrow">&#8964;</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Ideally 80–120 pages per file. If your reports are larger, write to us and we'll give you an extended quote.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Do you guarantee results? <span class="faq-arrow">&#8964;</span></button>
-        <div class="faq-a"><div class="faq-a-inner">We guarantee a professional and thorough audit process. Results depend on data quality and business complexity.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Who performs the analysis? <span class="faq-arrow">&#8964;</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Every audit is conducted by a specialized revenue analyst with a manual, structured review process. No automated reports.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Can I send more than one file? <span class="faq-arrow">&#8964;</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Yes, you can upload multiple ones, as long as they are within the 90-day period.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">How is my information protected? <span class="faq-arrow">&#8964;</span></button>
-        <div class="faq-a"><div class="faq-a-inner">We do not access your systems. We do not store any data. All your files are deleted upon completion of the report. The process is 100% private and manual.</div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <svg class="faq-wave-bg" viewBox="0 0 1440 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="-50,0 900,0 700,120 -50,120"  fill="rgba(255,255,255,0.015)"/>
-    <polygon points="600,0 1440,0 1440,80 400,120"  fill="rgba(255,255,255,0.018)"/>
-    <line x1="0" y1="60" x2="1440" y2="20"  stroke="rgba(255,255,255,0.035)" stroke-width="1"/>
-    <line x1="0" y1="80" x2="1440" y2="40"  stroke="rgba(255,255,255,0.025)" stroke-width="0.8"/>
-  </svg>
-  <div class="footer-inner">
-    <div class="footer-links">
-      <a href="/terms">Terms of services</a>
-      <a href="/privacy">Privacy policy</a>
-    </div>
-    <p class="footer-copy">© 2026 RLD — Revenue Leak Detection. All rights reserved.</p>
-  </div>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // FAQ — multiple items can stay open simultaneously
+    return {
+        getData: function() { return data; },
+        cookieName: function() { return cookieName; },
+        endpoint: function() { return url; },
+        path: function() { return path; }
+    };
+})();
