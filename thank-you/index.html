@@ -1,0 +1,144 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thank you — RLD</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #e6edf7;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding: 60px 20px;
+    }
+
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .headline {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .headline h1 {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .headline p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .arrow-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .arrow-note::before {
+      content: '→';
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .two-col-card {
+      background: #fff;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .divider {
+      background: #e0e8f0;
+    }
+
+    .col {
+      padding: 36px 40px;
+    }
+
+    .col h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .col p {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.75;
+      margin-bottom: 8px;
+    }
+
+    .col a {
+      color: #1a6ef5;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .col a:hover { text-decoration: underline; }
+
+    .col .note {
+      font-size: 13px;
+      color: #667;
+      font-style: italic;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .two-col-card { grid-template-columns: 1fr; }
+      .divider { height: 1px; width: auto; }
+      .col { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="headline">
+    <h1>Thank you, we received your information.</h1>
+    <p>We will review your submission and contact you within<br>24 hours with next steps</p>
+  </div>
+
+  <p class="arrow-note">To get started, please send us your billing documents using the instructions below.</p>
+
+  <div class="two-col-card">
+    <div class="col">
+      <h3>Upload requirements</h3>
+      <p>Data range included: last 90 days</p>
+      <p>- PDF format (exported from your CRM, billing system, Excel, etc.)</p>
+      <p>- Suggested size: 80-120 pages</p>
+      <p>- Ensure documents are text-searchable PDFs, not scanned images.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="col">
+      <h3>Send your files</h3>
+      <p>Please upload your documents via WeTransfer at</p>
+      <p style="text-align:center; margin: 10px 0;"><a href="https://wetransfer.com" target="_blank">wetransfer.com</a></p>
+      <p>- Send files to: contact@rldaudit.com</p>
+      <p>- Maximum file size: 2GB</p>
+      <p>- Multiple files allowed</p>
+      <p class="note">Your audit begins once payment is confirmed.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
