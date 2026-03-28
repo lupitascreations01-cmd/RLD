@@ -209,8 +209,14 @@
     );
 
     window.open('mailto:contact@rldaudit.com?subject=' + subject + '&body=' + body);
-    window.location.href = '/thank-you/';
+    document.getElementById('auditForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
   });
 </script>
+  <div id="successMsg" style="display:none; text-align:center; padding:60px 20px;">
+  <h2 style="font-size:28px; font-weight:700; margin-bottom:12px;">Thank you, we received your information.</h2>
+  <p style="color:#444; margin-bottom:8px;">We will review your submission and contact you within 24 hours with next steps.</p>
+  <p style="color:#444; margin-top:20px;">→ Please send your billing documents via <a href="https://wetransfer.com" target="_blank" style="color:#2bbfaa;">wetransfer.com</a> to contact@rldaudit.com</p>
+</div>
 </body>
 </html>
