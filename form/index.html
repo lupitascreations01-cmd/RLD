@@ -1,0 +1,218 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Request Audit — RLD</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #e6edf7;
+      color: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 580px;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 36px;
+      letter-spacing: -0.02em;
+    }
+
+    .form-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px 44px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    .field { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1a1a2e;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      color: #1a1a2e;
+      background: #f4f7fb;
+      border: 1px solid #d0dae8;
+      border-radius: 7px;
+      padding: 11px 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #2bbfaa;
+      box-shadow: 0 0 0 3px rgba(43,191,170,0.12);
+      background: #fff;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23667' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 34px;
+      cursor: pointer;
+    }
+
+    textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+    .btn-submit {
+      width: 100%;
+      background: #2bbfaa;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(43,191,170,0.3);
+    }
+    .btn-submit:hover { background: #25aa97; }
+
+    @media (max-width: 500px) {
+      .form-card { padding: 28px 20px; }
+      h2 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h2>Complete the form</h2>
+  <div class="form-card">
+    <form id="auditForm">
+
+      <div class="field">
+        <label for="company_name">Company name</label>
+        <input type="text" id="company_name" placeholder="Acme Inc." required>
+      </div>
+
+      <div class="field">
+        <label for="industry">Industry</label>
+        <select id="industry" required>
+          <option value="" disabled selected hidden>Select</option>
+          <option>SaaS/ software</option>
+          <option>Professional services</option>
+          <option>eCommerce/retail</option>
+          <option>Education</option>
+          <option>Health</option>
+          <option>Fintech/Financial Services</option>
+          <option>Logistics/transport</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="period">Period of time</label>
+        <select id="period" required>
+          <option value="" disabled selected hidden>Select</option>
+          <option>Last 90 days</option>
+          <option>90 to 180 days</option>
+          <option>180 to 365 days</option>
+          <option>Full 12-month range</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="country">Country</label>
+        <select id="country" required>
+          <option value="" disabled selected hidden>Select</option>
+          <option>Argentina</option>
+          <option>Brazil</option>
+          <option>Canada</option>
+          <option>Chile</option>
+          <option>Colombia</option>
+          <option>México</option>
+          <option>Spain</option>
+          <option>United Kingdom</option>
+          <option>United States</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="contact_name">Contact name</label>
+        <input type="text" id="contact_name" placeholder="Name" required>
+      </div>
+
+      <div class="field">
+        <label for="corporate_mail">Corporate email</label>
+        <input type="email" id="corporate_mail" placeholder="email" required>
+      </div>
+
+      <div class="field">
+        <label for="notes">Anything else we need to know? <span style="font-weight:400;color:#667">(Optional)</span></label>
+        <textarea id="notes" placeholder="Any context about your data or systems…"></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Request audit</button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  document.getElementById('auditForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var company = document.getElementById('company_name').value;
+    var industry = document.getElementById('industry').value;
+    var period = document.getElementById('period').value;
+    var country = document.getElementById('country').value;
+    var contact = document.getElementById('contact_name').value;
+    var email = document.getElementById('corporate_mail').value;
+    var notes = document.getElementById('notes').value;
+
+    if (!company || !industry || !period || !country || !contact || !email) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    var subject = encodeURIComponent('Audit Request — ' + company);
+    var body = encodeURIComponent(
+      'Company: ' + company + '\n' +
+      'Industry: ' + industry + '\n' +
+      'Period: ' + period + '\n' +
+      'Country: ' + country + '\n' +
+      'Contact: ' + contact + '\n' +
+      'Email: ' + email + '\n' +
+      'Notes: ' + (notes || 'None')
+    );
+
+    window.location.href = 'mailto:contact@rldaudit.com?subject=' + subject + '&body=' + body;
+    setTimeout(function() {
+      window.location.href = '/thank-you';
+    }, 1000);
+  });
+</script>
+</body>
+</html>
