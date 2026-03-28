@@ -51,8 +51,9 @@
     /* Fix: overlay was blocking clicks */
     .widget-button .widget-overlay { display: none !important; }
     /* Fix: center button text */
-    .widget-button { display: flex !important; align-items: center; justify-content: center; text-align: center; }
-    .widget-button .widget-text { text-align: center; width: 100%; pointer-events: none; display: block; }
+    .widget-button { display: flex !important; align-items: center !important; justify-content: center !important; }
+.widget-button .widget-text { text-align: center !important; width: 100% !important; pointer-events: none; padding: 0 !important; margin: 0 !important; line-height: 1 !important; }
+.widget-button .widget-text p { margin: 0 !important; padding: 0 !important; }
   </style>
 </head>
 
