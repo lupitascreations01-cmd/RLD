@@ -52,9 +52,237 @@
     .widget-button .widget-overlay { display: none !important; }
     /* Fix: center button text */
     .widget-button { display: flex !important; align-items: center !important; justify-content: center !important; }
-.widget-button .widget-text { text-align: center !important; width: 100% !important; pointer-events: none; padding: 0 !important; margin: 0 !important; line-height: 1 !important; }
-.widget-button .widget-text p { margin: 0 !important; padding: 0 !important; }
+    .widget-button .widget-text { text-align: center !important; width: 100% !important; pointer-events: none; padding: 0 !important; margin: 0 !important; line-height: 1 !important; }
+    .widget-button .widget-text p { margin: 0 !important; padding: 0 !important; }
   </style>
+
+  <!-- ============================================================
+       MOBILE RESPONSIVE OVERRIDES — max-width: 763px
+       Solo corrige layout en celular. No altera diseño desktop.
+       ============================================================ -->
+  <style>
+    @media (max-width: 763px) {
+
+      /* ── GLOBAL OVERFLOW FIX ── */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+      }
+
+      /* ── SECTIONS: quitar alturas fijas, permitir que crezcan ── */
+      .widget.widget-section,
+      .widget-section {
+        height: auto !important;
+        min-height: 0 !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
+      }
+
+      /* ── ROW: fluido ── */
+      .row {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        float: none !important;
+        position: static !important;
+        display: block !important;
+      }
+
+      /* ── CONTAINER: fluido con padding lateral ── */
+      .container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 24px 20px !important;
+        position: relative !important;
+        height: auto !important;
+        min-height: 0 !important;
+        float: none !important;
+        display: block !important;
+        box-sizing: border-box !important;
+      }
+
+      /* ── TODOS LOS WIDGETS: sacar de posicionamiento absoluto ── */
+      .widget {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        float: none !important;
+        transform: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+        display: block !important;
+      }
+
+      /* ── TEXTOS ── */
+      .widget-text,
+      .widget-text p,
+      .widget-text span,
+      .widget-text li,
+      .widget-text ul {
+        font-size: 15px !important;
+        line-height: 1.65 !important;
+        max-width: 100% !important;
+        word-break: break-word !important;
+        white-space: normal !important;
+        overflow-wrap: break-word !important;
+      }
+
+      .widget-text h1 {
+        font-size: 22px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 12px !important;
+      }
+
+      .widget-text h2 {
+        font-size: 18px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 10px !important;
+      }
+
+      /* ── BOTONES: ancho completo, táctiles ── */
+      a.widget-button,
+      .widget-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 16px 0 !important;
+        min-height: 52px !important;
+        padding: 14px 20px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 6px !important;
+        font-size: 16px !important;
+      }
+
+      /* ── IMÁGENES ── */
+      .widget-image,
+      img.widget {
+        max-width: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        display: block !important;
+        margin: 12px auto !important;
+      }
+
+      /* ── ÍCONOS SVG ── */
+      .widget-svgicon,
+      img.widget-svgicon {
+        display: block !important;
+        margin: 12px auto !important;
+        width: 48px !important;
+        height: 48px !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+      }
+
+      /* ── CAJAS DECORATIVAS ── */
+      .widget-box {
+        width: 100% !important;
+        height: 1px !important;
+        min-height: 0 !important;
+        margin: 4px 0 !important;
+        padding: 0 !important;
+      }
+
+      /* ── HERO: padding vertical y fondo ── */
+      #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section {
+        padding-top: 60px !important;
+        padding-bottom: 60px !important;
+        background-size: cover !important;
+        background-position: center top !important;
+      }
+
+      /* ── ACCORDION ── */
+      .widget-accordion {
+        width: 100% !important;
+      }
+
+      .accordion-element-container {
+        width: 100% !important;
+        border-bottom: 1px solid rgba(255,255,255,0.12) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        height: auto !important;
+      }
+
+      .accordion-heading-container {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 14px 0 !important;
+        cursor: pointer !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        height: auto !important;
+      }
+
+      .accordion-heading-text {
+        flex: 1 !important;
+        font-size: 15px !important;
+        line-height: 1.4 !important;
+        width: auto !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        height: auto !important;
+      }
+
+      .accordion-heading-text span {
+        font-size: 15px !important;
+      }
+
+      .accordion-trigger {
+        flex-shrink: 0 !important;
+        width: 24px !important;
+        height: 24px !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+      }
+
+      .accordion-desc-text {
+        width: 100% !important;
+        font-size: 14px !important;
+        line-height: 1.65 !important;
+        padding: 0 0 14px 0 !important;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        height: auto !important;
+      }
+
+      .accordion-desc-text span {
+        font-size: 14px !important;
+      }
+
+      /* ── FOOTER: centrado ── */
+      #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb .widget-text {
+        text-align: center !important;
+        margin-bottom: 10px !important;
+      }
+
+    }
+  </style>
+
 </head>
 
 <body id="TxvpQxGuo6CkxW3pseVeXnPkXz3TAWhR">
@@ -68,7 +296,7 @@
       <div id="q8wsoBn5tn0OHCwG5XqvnZfTDVUfZQSZ" class="widget widget-text"><p>Most billing leaks go unnoticed for 2+ years before someone looks.</p></div>
       <div id="ks2kvrPg0aHh9qTuLCVAa5aQUNBPfVfO" class="widget widget-text"><p>Typical findings: 3–12% recoverable revenue</p><p>✔ No integrations required</p><p>✔ Results in 72h</p></div>
       <div id="xUsDUHD1JZwQeVdlooyVZJW94WWyCzq2" class="widget widget-box"></div>
-     <a href="/form" id="lJcZPTSlXa0xBuFz8N1Si0LdDglWTgJn" class="widget widget-button" data-origin-label="Request audit" style="justify-content:center;">Request audit</a>
+      <a href="/form" id="lJcZPTSlXa0xBuFz8N1Si0LdDglWTgJn" class="widget widget-button" data-origin-label="Request audit" style="justify-content:center;">Request audit</a>
       <img id="DOJSkTvVkkITofFqX5J5OqMisHn9RAsb"
         src="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/86x68/-/format/auto/"
         srcset="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/61x48/-/format/auto/ 61w, https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/86x68/-/format/auto/ 86w"
@@ -182,7 +410,7 @@
   <div class="row">
     <div class="container">
       <div id="S62kvasJbFlLU8b8HpI3HSmA3N8z2wG8" class="widget widget-text"><p>Identify lost revenue before it compounds.</p></div>
-     <a href="/form" id="NEe2CtVtaksFFXDG6dTG8lSFBozpPrJx" class="widget widget-button" data-origin-label="Request audit" style="justify-content:center;">Request audit</a>
+      <a href="/form" id="NEe2CtVtaksFFXDG6dTG8lSFBozpPrJx" class="widget widget-button" data-origin-label="Request audit" style="justify-content:center;">Request audit</a>
     </div>
   </div>
 </div>
