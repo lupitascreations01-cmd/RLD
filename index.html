@@ -1,527 +1,1219 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="HandheldFriendly" content="true" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RLD — Revenue Leak Detection</title>
   <meta name="description" content="We analyze your CRM, billing, and payment data to detect revenue loss companies typically miss — without integrations or system access. Results in 72h." />
-
-  <!-- Fonts -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i&subset=latin,latin-ext&display=swap" rel="stylesheet">
-
-  <!-- Landingi base styles (layout engine) -->
-  <link href="https://styles.assets-landingi.com/assets/css/170325-landend-base.css" rel="stylesheet">
-  <!-- Landingi custom styles for this landing -->
-  <link href="https://styles.assets-landingi.com/cd7cvCymYDNDc13O/base.css" rel="stylesheet">
-
-  <!-- Hero background image (responsive) -->
-  <style>
-    @media (min-width: 764px) and (max-width: 959px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/959x/-/format/auto/");}}
-    @media (min-width: 960px) and (max-width: 1024px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1024x/-/format/auto/");}}
-    @media (min-width: 1025px) and (max-width: 1200px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1200x/-/format/auto/");}}
-    @media (min-width: 1201px) and (max-width: 1500px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1500x/-/format/auto/");}}
-    @media (min-width: 1501px) and (max-width: 1800px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/1800x/-/format/auto/");}}
-    @media (min-width: 1801px) and (max-width: 2999px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/2999x/-/format/auto/");}}
-    @media (min-width: 3000px) and (max-aspect-ratio: 3168/1344) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/format/auto/");}}
-    @media (min-width: 764px) and (max-height: 800px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x800/-/format/auto/");}}
-    @media (min-width: 764px) and (min-height: 801px) and (max-height: 962px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x962/-/format/auto/");}}
-    @media (min-width: 764px) and (min-height: 963px) and (max-height: 1080px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1080/-/format/auto/");}}
-    @media (min-width: 764px) and (min-height: 1081px) and (max-height: 1280px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1280/-/format/auto/");}}
-    @media (min-width: 764px) and (min-height: 1281px) and (max-height: 1440px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1440/-/format/auto/");}}
-    @media (min-width: 764px) and (min-height: 1441px) and (max-height: 1920px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/stretch/off/-/resize/x1920/-/format/auto/");}}
-    @media (min-width: 764px) and (min-height: 2160px) and ((min-aspect-ratio: 3168/1344) or (aspect-ratio: 3168/1344)) { body #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section { background-image: url("https://cdn.lugc.link/69ada4bc-2a0f-47df-9ecb-2cdc35ad1dd5/-/format/auto/");}}
-  </style>
-
-  <!-- FAQ/footer section backgrounds -->
-  <style>
-    @media (min-width: 764px) and (max-width: 959px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/959x/-/format/auto/");} #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/959x/-/format/auto/");} #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/959x/-/format/auto/");}}
-    @media (min-width: 1201px) and (max-width: 1500px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1500x/-/format/auto/");} #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1500x/-/format/auto/");} #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/1500x/-/format/auto/");}}
-    @media (min-width: 1801px) and (max-width: 2999px) and ((min-aspect-ratio: 1504/672) or (aspect-ratio: 1504/672)) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/2999x/-/format/auto/");} #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/2999x/-/format/auto/");} #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section { background-image: url("https://cdn.lugc.link/6b51cd1b-ce8d-4da1-8202-2e22a3af8163/-/stretch/off/-/resize/2999x/-/format/auto/");}}
-    @media (max-width: 763px) { #ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB.widget-section, #iNPKTXmrmdID710Xha5MNGtp7zEAdUo7.widget-section, #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb.widget-section { background-image: url("https://cdn.lugc.link/70ad2405-5555-45ee-9d83-1e65f6928763/-/stretch/off/-/resize/763x/-/format/auto/");}}
-  </style>
-
-  <!-- jQuery (needed for Landingi accordion) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* Fix: overlay was blocking clicks */
-    .widget-button .widget-overlay { display: none !important; }
-    /* Fix: center button text */
-    .widget-button { display: flex !important; align-items: center !important; justify-content: center !important; }
-    .widget-button .widget-text { text-align: center !important; width: 100% !important; pointer-events: none; padding: 0 !important; margin: 0 !important; line-height: 1 !important; }
-    .widget-button .widget-text p { margin: 0 !important; padding: 0 !important; }
-  </style>
+    /* ─── RESET ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      color: #1a2636;
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
 
-  <!-- ============================================================
-       MOBILE RESPONSIVE OVERRIDES — max-width: 763px
-       Solo corrige layout en celular. No altera diseño desktop.
-       ============================================================ -->
-  <style>
-    @media (max-width: 763px) {
+    /* ─── COLOURS ────────────────────────────────── */
+    /* dark bg: #0c1928  |  light bg: #e6edf7  |  white: #ffffff
+       pricing card: #3e4f62  |  teal: #2bbfaa  |  text-muted: #6b7f96  */
 
-      /* ── GLOBAL OVERFLOW FIX ── */
-      html, body {
-        overflow-x: hidden !important;
-        width: 100% !important;
+    /* ─── LANG BAR ───────────────────────────────── */
+    .lang-bar {
+      background: #0c1928;
+      display: flex;
+      justify-content: flex-end;
+      padding: 6px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .lang-toggle {
+      display: flex;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Roboto', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: #2bbfaa;
+      color: #ffffff;
+    }
+
+    /* ─── NAV / HEADER ───────────────────────────── */
+    .site-header {
+      background: #0c1928;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+    .logo span { color: #2bbfaa; }
+    .header-nav a {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 28px;
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: #ffffff; }
+    .header-nav { display: none; }
+
+    /* ─── HERO ───────────────────────────────────── */
+    .hero {
+      background: #0c1928;
+      position: relative;
+      overflow: hidden;
+      padding: 72px 24px 80px;
+      text-align: center;
+    }
+    /* Planos diagonales rectos */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -10%;
+      width: 70%; height: 340px;
+      background: rgba(255,255,255,0.025);
+      transform: skewY(-7deg);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -5%;
+      width: 60%; height: 280px;
+      background: rgba(255,255,255,0.02);
+      transform: skewY(6deg);
+      transform-origin: bottom right;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #2bbfaa;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 48px);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 18px);
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 580px;
+      margin: 0 auto 12px;
+    }
+    .hero-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 32px;
+    }
+    .hero-checks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 28px;
+      margin-top: 28px;
+    }
+    .hero-checks span {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-checks span::before {
+      content: '✔';
+      color: #2bbfaa;
+      font-size: 13px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(43,191,170,0.1);
+      border: 1px solid rgba(43,191,170,0.3);
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 20px;
+    }
+    .hero-badge strong { color: #2bbfaa; }
+
+    /* ─── BUTTON ─────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      background: #2bbfaa;
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(43,191,170,0.3);
+      letter-spacing: 0.02em;
+    }
+    .btn:hover {
+      background: #24a896;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(43,191,170,0.4);
+    }
+
+    /* ─── SECTION WRAPPER ────────────────────────── */
+    .section { padding: 64px 24px; }
+    .section-light { background: #e6edf7; }
+    .section-dark  { background: #0c1928; }
+    .section-white { background: #ffffff; }
+
+    .container {
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #2bbfaa;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 34px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .section-title.on-dark { color: #ffffff; }
+    .section-sub {
+      font-size: 15px;
+      color: #6b7f96;
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    /* ─── 3-COL: PROBLEM / ANALYZE / RECEIVE ─────── */
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 40px;
+    }
+    .col-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .col-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #2bbfaa;
+      margin-bottom: 14px;
+    }
+    .col-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0c1928;
+      margin-bottom: 14px;
+    }
+    .col-card ul {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .col-card ul li {
+      font-size: 14px;
+      color: #4a5f75;
+      line-height: 1.55;
+      padding-left: 16px;
+      position: relative;
+    }
+    .col-card ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #2bbfaa;
+      font-size: 12px;
+    }
+
+    /* ─── HOW IT WORKS ───────────────────────────── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .step-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e6edf7;
+      border: 2px solid #2bbfaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: #2bbfaa;
+      flex-shrink: 0;
+    }
+    .step-body {}
+    .step-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0c1928;
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: #6b7f96;
+      line-height: 1.6;
+    }
+    .how-note {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7f96;
+      font-style: italic;
+    }
+
+    /* ─── PRICING ────────────────────────────────── */
+    .pricing-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .pricing-card {
+      background: #3e4f62;
+      border-radius: 14px;
+      padding: 36px 32px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 8px 36px rgba(0,0,0,0.25);
+    }
+    .pricing-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #2bbfaa;
+      margin-bottom: 8px;
+    }
+    .pricing-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .pricing-subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 28px;
+    }
+    .pricing-price {
+      font-size: 52px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pricing-price sup {
+      font-size: 24px;
+      vertical-align: super;
+      font-weight: 400;
+    }
+    .pricing-period {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 28px;
+    }
+    .pricing-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin: 24px 0;
+    }
+    .pricing-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .pricing-features li {
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .pricing-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #2bbfaa;
+      font-weight: 700;
+    }
+    .pricing-note-text {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+    .pricing-recovery {
+      margin-top: 20px;
+      background: rgba(43,191,170,0.1);
+      border: 1px solid rgba(43,191,170,0.25);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    /* ─── SECURITY ───────────────────────────────── */
+    .security-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 36px 28px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      margin-top: 0;
+    }
+    .security-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .security-left h2 {
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 700;
+      color: #0c1928;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .security-left p {
+      font-size: 14px;
+      color: #6b7f96;
+      line-height: 1.7;
+    }
+    .security-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .security-bullets li {
+      font-size: 14px;
+      color: #4a5f75;
+      padding-left: 22px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .security-bullets li::before {
+      content: '•';
+      position: absolute;
+      left: 6px;
+      color: #2bbfaa;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .security-footer-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #9aabb8;
+      font-style: italic;
+    }
+
+    /* ─── WHY RLD ────────────────────────────────── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 36px;
+    }
+    .why-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .why-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(43,191,170,0.12);
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .why-body {}
+    .why-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0c1928;
+      margin-bottom: 5px;
+    }
+    .why-desc {
+      font-size: 14px;
+      color: #6b7f96;
+      line-height: 1.6;
+    }
+    .why-analyst {
+      margin-top: 36px;
+      padding: 20px 22px;
+      background: #e6edf7;
+      border-radius: 8px;
+      border-left: 3px solid #2bbfaa;
+      font-size: 13px;
+      color: #4a5f75;
+      line-height: 1.65;
+    }
+    .why-compat {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .why-compat span {
+      font-size: 12px;
+      background: #e6edf7;
+      color: #3e5268;
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+
+    /* ─── CTA BAND ───────────────────────────────── */
+    .cta-band {
+      background: linear-gradient(135deg, #0c1928 0%, #112540 100%);
+      text-align: center;
+      padding: 72px 24px;
+    }
+    .cta-band h2 {
+      font-size: clamp(20px, 3.5vw, 32px);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      max-width: 560px;
+      margin: 0 auto 16px;
+    }
+    .cta-band p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      max-width: 440px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+    }
+    .limited-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ─── FAQ ────────────────────────────────────── */
+    .faq-section {
+      background: #0c1928;
+      padding: 64px 24px;
+    }
+    .faq-header {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+    .faq-cols {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .faq-item:first-child {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .faq-q {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 18px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      transition: color 0.2s;
+    }
+    .faq-q:hover { color: #2bbfaa; }
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: #2bbfaa;
+      transition: transform 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(45deg); }
+    .faq-a {
+      display: none;
+      padding: 0 0 18px 0;
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    .site-footer {
+      background: #0c1928;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 32px 24px;
+    }
+    .footer-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .footer-logo span { color: #2bbfaa; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #ffffff; }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── RESPONSIVE — TABLET+ ───────────────────── */
+    @media (min-width: 640px) {
+      .three-col {
+        grid-template-columns: 1fr 1fr;
       }
-
-      /* ── SECTIONS: quitar alturas fijas, permitir que crezcan ── */
-      .widget.widget-section,
-      .widget-section {
-        height: auto !important;
-        min-height: 0 !important;
-        width: 100% !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        box-sizing: border-box !important;
+      .steps-grid {
+        grid-template-columns: 1fr 1fr;
       }
-
-      /* ── ROW: fluido ── */
-      .row {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        float: none !important;
-        position: static !important;
-        display: block !important;
+      .why-grid {
+        grid-template-columns: 1fr 1fr 1fr;
       }
-
-      /* ── CONTAINER: fluido con padding lateral ── */
-      .container {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 24px 20px !important;
-        position: relative !important;
-        height: auto !important;
-        min-height: 0 !important;
-        float: none !important;
-        display: block !important;
-        box-sizing: border-box !important;
+      .faq-cols {
+        grid-template-columns: 1fr 1fr;
+        gap: 0 48px;
       }
-
-      /* ── TODOS LOS WIDGETS: sacar de posicionamiento absoluto ── */
-      .widget {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        min-height: 0 !important;
-        float: none !important;
-        transform: none !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        box-sizing: border-box !important;
-        display: block !important;
+      /* first item in col 2 needs top border */
+      .faq-col-right .faq-item:first-child {
+        border-top: 1px solid rgba(255,255,255,0.08);
       }
+    }
 
-      /* ── TEXTOS ── */
-      .widget-text,
-      .widget-text p,
-      .widget-text span,
-      .widget-text li,
-      .widget-text ul {
-        font-size: 15px !important;
-        line-height: 1.65 !important;
-        max-width: 100% !important;
-        word-break: break-word !important;
-        white-space: normal !important;
-        overflow-wrap: break-word !important;
+    /* ─── RESPONSIVE — DESKTOP ───────────────────── */
+    @media (min-width: 900px) {
+      .header-nav { display: flex; }
+
+      .three-col {
+        grid-template-columns: 1fr 1fr 1fr;
       }
-
-      .widget-text h1 {
-        font-size: 22px !important;
-        line-height: 1.3 !important;
-        margin-bottom: 12px !important;
+      .steps-grid {
+        grid-template-columns: repeat(4, 1fr);
       }
-
-      .widget-text h2 {
-        font-size: 18px !important;
-        line-height: 1.3 !important;
-        margin-bottom: 10px !important;
+      .security-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: start;
       }
-
-      /* ── BOTONES: ancho completo, táctiles ── */
-      a.widget-button,
-      .widget-button {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 16px 0 !important;
-        min-height: 52px !important;
-        padding: 14px 20px !important;
-        box-sizing: border-box !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        border-radius: 6px !important;
-        font-size: 16px !important;
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
       }
-
-      /* ── IMÁGENES ── */
-      .widget-image,
-      img.widget {
-        max-width: 100% !important;
-        width: auto !important;
-        height: auto !important;
-        display: block !important;
-        margin: 12px auto !important;
-      }
-
-      /* ── ÍCONOS SVG ── */
-      .widget-svgicon,
-      img.widget-svgicon {
-        display: block !important;
-        margin: 12px auto !important;
-        width: 48px !important;
-        height: 48px !important;
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-      }
-
-      /* ── CAJAS DECORATIVAS ── */
-      .widget-box {
-        width: 100% !important;
-        height: 1px !important;
-        min-height: 0 !important;
-        margin: 4px 0 !important;
-        padding: 0 !important;
-      }
-
-      /* ── HERO: padding vertical y fondo ── */
-      #T3wqS6u3vovRMkWRr67DDSPhFmCBes6E.widget-section {
-        padding-top: 60px !important;
-        padding-bottom: 60px !important;
-        background-size: cover !important;
-        background-position: center top !important;
-      }
-
-      /* ── ACCORDION ── */
-      .widget-accordion {
-        width: 100% !important;
-      }
-
-      .accordion-element-container {
-        width: 100% !important;
-        border-bottom: 1px solid rgba(255,255,255,0.12) !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        display: block !important;
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        height: auto !important;
-      }
-
-      .accordion-heading-container {
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 14px 0 !important;
-        cursor: pointer !important;
-        box-sizing: border-box !important;
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        height: auto !important;
-      }
-
-      .accordion-heading-text {
-        flex: 1 !important;
-        font-size: 15px !important;
-        line-height: 1.4 !important;
-        width: auto !important;
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        height: auto !important;
-      }
-
-      .accordion-heading-text span {
-        font-size: 15px !important;
-      }
-
-      .accordion-trigger {
-        flex-shrink: 0 !important;
-        width: 24px !important;
-        height: 24px !important;
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-      }
-
-      .accordion-desc-text {
-        width: 100% !important;
-        font-size: 14px !important;
-        line-height: 1.65 !important;
-        padding: 0 0 14px 0 !important;
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        height: auto !important;
-      }
-
-      .accordion-desc-text span {
-        font-size: 14px !important;
-      }
-
-      /* ── FOOTER: centrado ── */
-      #hJiBrHzTfs7aozm2668WX6ymdLDoMWnb .widget-text {
-        text-align: center !important;
-        margin-bottom: 10px !important;
-      }
-
     }
   </style>
-
 </head>
 
-<body id="TxvpQxGuo6CkxW3pseVeXnPkXz3TAWhR">
+<body>
 
-<!-- HERO -->
-<div id="T3wqS6u3vovRMkWRr67DDSPhFmCBes6E" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="cciMwShlc92SyRhd0QeXeXL3K1oGctya" class="widget widget-text"><p>Hidden revenue leaks cost mid-market companies $500K/year. We find yours in 72h.</p></div>
-      <div id="lLqfxcfX4QBZ53Uv06Wb0EMoNWDd72LX" class="widget widget-text"><p>We analyze your CRM, billing, and payment data to detect revenue loss companies typically miss — without integrations or system access.</p></div>
-      <div id="q8wsoBn5tn0OHCwG5XqvnZfTDVUfZQSZ" class="widget widget-text"><p>Most billing leaks go unnoticed for 2+ years before someone looks.</p></div>
-      <div id="ks2kvrPg0aHh9qTuLCVAa5aQUNBPfVfO" class="widget widget-text"><p>Typical findings: 3–12% recoverable revenue</p><p>✔ No integrations required</p><p>✔ Results in 72h</p></div>
-      <div id="xUsDUHD1JZwQeVdlooyVZJW94WWyCzq2" class="widget widget-box"></div>
-      <a href="/form" id="lJcZPTSlXa0xBuFz8N1Si0LdDglWTgJn" class="widget widget-button" data-origin-label="Request audit" style="justify-content:center;">Request audit</a>
-      <img id="DOJSkTvVkkITofFqX5J5OqMisHn9RAsb"
-        src="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/86x68/-/format/auto/"
-        srcset="https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/61x48/-/format/auto/ 61w, https://cdn.lugc.link/225be6fe-a3c6-440b-933f-1ca031ab16ff/-/crop/787x637/422,0/-/preview/86x68/-/format/auto/ 86w"
-        sizes="(max-width: 763px) 61px, 86px"
-        class="widget widget-image" alt="" width="86" height="68" fetchpriority="high">
-    </div>
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="es">ES</button>
   </div>
 </div>
 
-<!-- FROM HIDDEN ERRORS -->
-<div id="MhFHkQL4JVGgOartwIxraPrdXCzPBba9" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="PdwDS3TeQvUHcLTiPQ4qAvzOypNpqq1m" class="widget widget-text"><p>The problem</p></div>
-      <div id="x4orR3QeMiuBquw3duucwWLAgcsaPZ3x" class="widget widget-text"><p>Companies lose money without realizing it:</p><p><br></p><p>- Customers paying less</p><p>- MRR errors</p><p>- Duplicate charges</p><p>- Unrecorded churn</p><p>- Incorrectly applied discounts</p><p><br></p><p>These errors accumulate and directly impact growth</p></div>
-      <div id="uHIh0iM7RGQ8bFIpeVInxFXnM9R3OXCt" class="widget widget-text"><h1>From hidden errors to measurable recovery</h1></div>
-      <div id="KgyDvTs2p7MGPLaXdVLn6yfC9w610BzK" class="widget widget-text"><p>Most leaks happen without anyone noticing.</p></div>
-      <div id="fxXwOugIRkw7x9J3TwO2KiAC6Um9t8IW" class="widget widget-text"><p>What we analyze</p></div>
-      <div id="qUiiktza9rCPAgI2S1Dw1dAQyCprmBSE" class="widget widget-text"><p>- Billing inconsistencies</p><p>- MRR errors</p><p>- Irregular payment cycles</p><p>- Unrecorded churn</p><p>- Duplicate charges</p><p>- Leaks in upgrades/downgrades</p><p>- Incorrectly allocated commission</p></div>
-      <div id="EzVJZQnDd3a0WoFriuwmbbspAct4vp9d" class="widget widget-text"><p>What you receive</p></div>
-      <div id="rBcmICtKs183L75DlDlrJa2ZC3I7RbP5" class="widget widget-text"><p>All presented in a simple and actionable report:</p><p><br></p><p>- Leaks detected</p><p>- Estimated recoverable amount</p><p>- Impact analysis</p><p>- Practical recommendations</p><p>- Remediation roadmap</p><p>- Premium PDF report</p></div>
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">RLD<span>.</span></div>
+  <nav class="header-nav">
+    <a href="#problem"   data-t="nav_problem">The problem</a>
+    <a href="#how"       data-t="nav_how">How it works</a>
+    <a href="#pricing"   data-t="nav_pricing">Pricing</a>
+    <a href="#faq"       data-t="nav_faq">FAQ</a>
+  </nav>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow" data-t="hero_eyebrow">Revenue Leak Detection · SaaS Audit</div>
+    <h1 data-t="hero_h1">Hidden revenue leaks cost<br>mid-market companies $500K/year.<br>We find yours in 72h.</h1>
+    <p class="hero-sub" data-t="hero_sub">We analyze your CRM, billing, and payment data to detect revenue loss companies typically miss — without integrations or system access.</p>
+    <p class="hero-note" data-t="hero_note">Most billing leaks go unnoticed for 2+ years before someone looks.</p>
+    <a href="/form" class="btn" data-t="btn_request">Request audit</a>
+    <div class="hero-checks">
+      <span data-t="check_findings">Typical findings: 3–12% recoverable revenue</span>
+      <span data-t="check_no_int">No integrations required</span>
+      <span data-t="check_72h">Results in 72h</span>
+    </div>
+    <div class="hero-badge">
+      <span data-t="hero_badge">Fixed price: <strong>$899 USD</strong> · All 8 leak categories · 72h delivery</span>
     </div>
   </div>
-</div>
+</section>
 
-<!-- HOW IT WORKS title -->
-<div id="oGrTBQ0A6d4wxRMsfsEellKNvQvePMcv" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="PMD1mtmnRREEaanDllqfGGT7qzTKOlDm" class="widget widget-text"><p>How it works</p></div>
+<!-- ═══ PROBLEM / ANALYZE / RECEIVE ═══ -->
+<section class="section section-light" id="problem">
+  <div class="container">
+    <div class="section-tag" data-t="s_overview">Overview</div>
+    <h2 class="section-title" data-t="s_overview_title">From hidden errors to measurable recovery</h2>
+    <p class="section-sub" data-t="s_overview_sub">Most leaks happen without anyone noticing. We find them before they compound.</p>
+    <div class="three-col">
+
+      <div class="col-card">
+        <div class="col-card-label" data-t="col1_label">The problem</div>
+        <h3 data-t="col1_title">Companies lose money without realizing it</h3>
+        <ul>
+          <li data-t="col1_i1">Customers paying less than contracted</li>
+          <li data-t="col1_i2">MRR errors going undetected</li>
+          <li data-t="col1_i3">Duplicate charges</li>
+          <li data-t="col1_i4">Unrecorded churn</li>
+          <li data-t="col1_i5">Incorrectly applied discounts</li>
+        </ul>
+      </div>
+
+      <div class="col-card">
+        <div class="col-card-label" data-t="col2_label">What we analyze</div>
+        <h3 data-t="col2_title">8 leak categories, every audit</h3>
+        <ul>
+          <li data-t="col2_i1">Billing inconsistencies</li>
+          <li data-t="col2_i2">MRR crosscheck errors</li>
+          <li data-t="col2_i3">Irregular payment cycles</li>
+          <li data-t="col2_i4">Silent churn (unpaid, still active)</li>
+          <li data-t="col2_i5">Duplicate charges</li>
+          <li data-t="col2_i6">Leaks in upgrades / downgrades</li>
+          <li data-t="col2_i7">FX rate mismatches</li>
+          <li data-t="col2_i8">Chargebacks not managed</li>
+        </ul>
+      </div>
+
+      <div class="col-card">
+        <div class="col-card-label" data-t="col3_label">What you receive</div>
+        <h3 data-t="col3_title">An actionable report, not a spreadsheet</h3>
+        <ul>
+          <li data-t="col3_i1">Every leak flagged with source evidence</li>
+          <li data-t="col3_i2">Estimated recoverable amount per finding</li>
+          <li data-t="col3_i3">Impact analysis</li>
+          <li data-t="col3_i4">Practical recommendations</li>
+          <li data-t="col3_i5">Remediation roadmap</li>
+          <li data-t="col3_i6">Premium PDF report</li>
+        </ul>
+      </div>
+
     </div>
   </div>
-</div>
+</section>
 
-<!-- HOW IT WORKS cards -->
-<div id="Fg8Uy5WTXzQmdqAIXHms0ZaTTArpkoau" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="dUoIU6vXIvnq3THCK7HZK55TbOTx945f" class="widget widget-box"></div>
-      <img src="https://icons.assets-landingi.com/icon_85028b9d01b640fb5ec5e2704cb50b5a.svg" id="BUvEfxqatRO9kL3t3TdwenZKTuuFDES6" class="widget widget-svgicon" alt="" />
-      <div id="mXTtaUXzAz2zQy43NcsCNTJg1cQ2wLz5" class="widget widget-text"><p>Send us your information</p></div>
-      <div id="OoaoPlVPnC8KxbKqCMNAU3DZv1nWHzVv" class="widget widget-text"><p>Company, contact and context</p></div>
-      <div id="rpior2wEpSqV61dw01UdAxwqxHTKukkB" class="widget widget-box"></div>
-      <div id="eH9CyTptQT4I77VpmM6eCnq4myXAitJf" class="widget widget-text"><p>Contracts, CRM, billing</p></div>
-      <div id="lqf3tvQoJQDX5RmnwOzFF256Hqqf6oT4" class="widget widget-text"><p>Upload your files</p></div>
-      <img src="https://icons.assets-landingi.com/icon_d6d14b7bda8dd4b4b4adbb84b9049c95.svg" id="grRVDx6TyTz80gU696XJ6UEmOANHNhLf" class="widget widget-svgicon" alt="" />
-      <div id="C1PqXAr3nemULLAul26JHgU0aDFLuIxo" class="widget widget-box"></div>
-      <div id="nfTBsnqXTTbm2qhnSyseOHMdi92mChgi" class="widget widget-text"><p>We detect real leaks</p></div>
-      <div id="w0vWfb1rH3afoH674GqzIXH8H1T61yV0" class="widget widget-text"><p>Analysis</p></div>
-      <img src="https://icons.assets-landingi.com/icon_6f342fcbd3ff0bfd938351f5dbf0db14.svg" id="PxIdHe7s2Cw5tuU3lS8VCAxwQDTD1a0b" class="widget widget-svgicon" alt="" />
-      <div id="qyW6rzT6uiPbN5PlTmJ6csXkWiSwbI79" class="widget widget-box"></div>
-      <div id="GtRKt9mGQpSmFZXgUATy7k7UEJ7NJgq3" class="widget widget-text"><p>Results in 72 hours</p></div>
-      <div id="OgzsycH0u4ZtwDcPPdXISbSdTQuuGmNZ" class="widget widget-text"><p>Executive report</p></div>
-      <img src="https://icons.assets-landingi.com/icon_8da4d47816bdc4208892f8976149f273.svg" id="hu3VHr81qxlUCKkwCmmGxSAaBkC0WdGm" class="widget widget-svgicon" alt="" />
-      <div id="kXk8qr0UwB5oIWSZ4yZiZ2oF6HKe63J6" class="widget widget-text"><h2>Fully async. No calls, no integrations, no waiting rooms. Just your files and your report.</h2></div>
-    </div>
-  </div>
-</div>
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section section-white" id="how">
+  <div class="container">
+    <div class="section-tag" data-t="s_how">Process</div>
+    <h2 class="section-title" data-t="s_how_title">How it works</h2>
+    <div class="steps-grid">
 
-<!-- PRICING -->
-<div id="BUkElZXCofnrIc41J2ehO1dsLi5X5FR5" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="RbGy0h93gryiW8Adkvzc9onxNTTZEoyQ" class="widget widget-text"><p>- Comprehensive analysis of your last 8–12 weeks (up to 90 days)</p><p>- Review of billing, CRM, payment gateways, and subscriptions</p><p>- Detection of revenue leaks: chargebacks, hidden churn, uncharged upgrades, sync errors, etc.</p><p>- Executive PDF report with findings, evidence, and calculations</p><p>- Actionable recovery recommendations</p><p>- Delivered within 72 hours</p></div>
-      <div id="t4BsQ0SzrA8ucNcNfx9IsC5fXVfHUHXN" class="widget widget-text"><p>Revenue Audit from</p></div>
-      <div id="czV9iT1VvJTPqG3tx36QnDVPZqUh9qyP" class="widget widget-box"></div>
-      <div id="As82phh2xyQoOcfmQuIlT9ZGqxXlFHNT" class="widget widget-text"><p>$899 USD</p></div>
-      <div id="WTPTIfwirftMvnL5FbdShEnIbLxse0Zo" class="widget widget-text"><p>Companies typically recover 3–12% of annual revenue after their first audit</p></div>
-      <div id="Dcs01LHZmX3Q6JZaUlXXXNZTENqXd4Or" class="widget widget-text"><h2>Pricing</h2></div>
-      <div id="X1TOZMPsgiIoJQw67vXvtwWLG1l7rAHZ" class="widget widget-text"><p>One audit. Full visibility into what you're losing.</p></div>
-      <div id="IWxBDsbv4alv8atxk8vpNAFzR3vCFtPT" class="widget widget-text"><ul><li>Extended scope available: 90 days to 12 months. Contact us for pricing.</li></ul></div>
-    </div>
-  </div>
-</div>
-
-<!-- SECURITY -->
-<div id="Q9WNCFM2TmmO2RI6T1hzTy5lKfwAIcob" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="RNN0vtkSCcK78OZ0HpSm9TZNMRA9VeNs" class="widget widget-text"><p>Security &amp; Confidentiality</p></div>
-      <div id="MOaK15acHho0ckz56hOQnWkR92z8erwP" class="widget widget-text"><p>Designed for sensitive financial data.</p></div>
-      <div id="qEZxSaQ8xOHvl3mUeseNluK8frzCT4Wv" class="widget widget-text"><p>Your data remains fully under your control.</p><p><br></p><p>• No system access required</p><p>• No API connections</p><p>• No persistent data storage</p><p>• Files used only for audit purposes</p><p>• Automatic deletion after project completion</p><p>• Restricted internal access</p><p>• Private, manual review process</p><p><br></p><p>We operate under strict internal confidentiality practices.</p></div>
-      <div id="mhRvxeLiJqvIfAsIKMVs4hD6rVdQlPEN" class="widget widget-box" role="presentation"></div>
-      <div id="Gss2lweQyRTsm3iJsSihuOqVV1lplDI5" class="widget widget-box" role="presentation"></div>
-    </div>
-  </div>
-</div>
-
-<!-- WHY RLD -->
-<div id="b2kBuw0ebqlFul3fDBex2iI2M1DpWWp6" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="mDaFWbcOIsKrDUsug2otulfIDRJNcqv5" class="widget widget-text"><p>Why companies choose RLD</p></div>
-      <div id="Q5trorsv3nb5qCpoQ5OGkKA5JerqeQ5i" class="widget widget-box" role="presentation"></div>
-      <div id="SGbSxZv8UrIvtwsQtuusFAm7tlMnRZdQ" class="widget widget-text"><h2>Independent analysis</h2></div>
-      <div id="eLzgHnpiSpuB0B60TRguaFkAHU8E5ACu" class="widget widget-text"><p>No software to sell. No integrations required. No long-term contracts.</p></div>
-      <div id="oqVOZqTlSXWiFVzdLOIQO82C0euB5tn6" class="widget widget-box" role="presentation"></div>
-      <div id="D11ipwS6mrOmTkubNZJMxnZ8oDzHyIQe" class="widget widget-text"><h2>Specialized focus</h2></div>
-      <div id="bpuUcJM9UuWeINTMnC07T6W6n2wNZ2qZ" class="widget widget-text"><p>Built specifically for billing, CRM, and payment revenue leaks.</p></div>
-      <div id="Q4yRqlIELP0gMiCrVwDTTR0ILgQNA04t" class="widget widget-box" role="presentation"></div>
-      <div id="kXV828o4BR0TxLRTRcSbrwkPgI8TfQ1M" class="widget widget-text"><h2>Actionable outcomes</h2></div>
-      <div id="TJMWHgV2mu9aqTlgK4s8HwwFHsnLqKoa" class="widget widget-text"><p>Every finding includes quantified impact and clear remediation steps.</p></div>
-      <div id="aMBy6b6pcuztQDWVu276Etva9OlxH7cz" class="widget widget-text"><p>✓ Analyzes exports from Stripe, HubSpot &amp; Salesforce</p><p>✓ No integrations or system access needed</p><p>✓ Just upload your data — we handle the rest</p></div>
-      <div id="Tbni7RBz8SA3MQ5L2FhvCv71DFHKeaeJ" class="widget widget-text"><p>RLD audits are conducted by a revenue analyst with hands-on experience in B2B billing operations and CRM data reconciliation. Every report is reviewed manually — no automated outputs.</p></div>
-    </div>
-  </div>
-</div>
-
-<!-- CTA -->
-<div id="MoCT17TQ6yF7ov5gGKq0x6oRDU1AOCTT" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="S62kvasJbFlLU8b8HpI3HSmA3N8z2wG8" class="widget widget-text"><p>Identify lost revenue before it compounds.</p></div>
-      <a href="/form" id="NEe2CtVtaksFFXDG6dTG8lSFBozpPrJx" class="widget widget-button" data-origin-label="Request audit" style="justify-content:center;">Request audit</a>
-    </div>
-  </div>
-</div>
-
-<!-- LIMITED SPACES -->
-<div id="dZPKM4MmsmA3tTG5onJhIVr6IoqnlvZC" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="sUtCnwNabfbQaIUpsniRvT26p3iCOMwb" class="widget widget-text"><p>Limited spaces due to manual capacity.</p></div>
-    </div>
-  </div>
-</div>
-
-<!-- FAQ TITLE -->
-<div id="ieyPr8tEXtSZy1SmkLsCEWo6Np768ZyB" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="Vbu8gTfPW8Wf3CoxqQhTbdMpVW2FgL7n" class="widget widget-text"><p>FAQ</p></div>
-    </div>
-  </div>
-</div>
-
-<!-- FAQ ACCORDION -->
-<div id="iNPKTXmrmdID710Xha5MNGtp7zEAdUo7" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="fwiVwNGaErQ3TXA41I1q6nWNofOt1FxC" class="widget widget-accordion" data-trigger="heading" data-rotate-trigger="true">
-        <div id="VRuUiIzAdhoTn5DyI4VMtaLyeOLzOaGX" class="widget widget-container accordion-element-container">
-          <div id="zbGNT7gX9dKkAHTmO0LmE1fr7SOtTRmG" class="widget widget-container accordion-heading-container">
-            <div id="yMRQTwtG6NddiLagzci3VbdTpuaXoqh6" class="widget widget-text accordion-heading-text"><span>What files can I upload?</span></div>
-            <div id="hzCxzqM6khu2kAslJkUETPPz3S0woVF8" class="widget widget-container accordion-trigger"></div>
-          </div>
-          <div id="WbaUX2gZAbgWfpNy4gv4u3SHtp6WA6iE" class="widget widget-text accordion-desc-text"><span>You can upload PDF reports from your payment platforms, CRM, contracts, billing, or exported dashboards. If your data is in Excel or CSV, you can export it as a PDF and upload it as well.</span></div>
-        </div>
-        <div id="bgcuzmcp2toSWEXA09Z0xN9ld7oNbdKK" class="widget widget-container accordion-element-container">
-          <div id="Vbokdz9UnREksJIVom1crXBmEffTBrx2" class="widget widget-container accordion-heading-container">
-            <div id="TC5WGvqZdBOnBNis9O1p9hnNsrEMgrFK" class="widget widget-text accordion-heading-text"><span>Do you guarantee results?</span></div>
-            <div id="Uu6V6NFlbnBBCPbEaKoTeTZUHT0RQbRK" class="widget widget-container accordion-trigger"></div>
-          </div>
-          <div id="QsdXqiuw1JH242hGV7auuzSBPT3maS0c" class="widget widget-text accordion-desc-text"><span>We guarantee a professional and thorough audit process. Results depend on data quality and business complexity.</span></div>
-        </div>
-        <div id="EbrplmgitJm9GpzJ4WRQRrICVy3M0y1T" class="widget widget-container accordion-element-container">
-          <div id="qNuwekGedSHNg3zQglgWNx5mv5O6AgqR" class="widget widget-container accordion-heading-container">
-            <div id="O7BXToRVEtzbsM7wuMLk2IaF4iB6JAr3" class="widget widget-text accordion-heading-text"><span>Can I send more than one file?</span></div>
-            <div id="lTxNITcxTFNWTuIJ6hblExVe6rICitsK" class="widget widget-container accordion-trigger"></div>
-          </div>
-          <div id="sE8B8UtHpcxi5ITDL9wi2AlSnKVHreTs" class="widget widget-text accordion-desc-text"><span>Yes, you can upload multiple ones, as long as they are within the 90-day period.</span></div>
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title" data-t="step1_title">Send us your information</div>
+          <p class="step-desc" data-t="step1_desc">Company, contact details and context about your billing stack. Takes 5 minutes.</p>
         </div>
       </div>
-      <div id="iuaUGm027PQeN6ezdoabDbyI67XQs2TT" class="widget widget-accordion" data-trigger="heading" data-rotate-trigger="true">
-        <div id="IVvzJ4x8vkqhfHoJFdFLrtCTzD43lDgQ" class="widget widget-container accordion-element-container">
-          <div id="knIXR5TyEBdlWFxW3CSAM9iqvAAgyG5u" class="widget widget-container accordion-heading-container">
-            <div id="y607DL32vCbJSz6G9c1LOTyKbhy4Q4XB" class="widget widget-text accordion-heading-text"><span>Is there a size limit?</span></div>
-            <div id="Ceb7cC0Um30ic1ywmRxOdHVTWh9xyUhm" class="widget widget-container accordion-trigger"></div>
-          </div>
-          <div id="c8wZp0UxTSGHmZgkIVJNi9any3IrPXVk" class="widget widget-text accordion-desc-text"><span>Ideally, 80–120 pages per file. If your reports are larger, write to us and we'll give you an extended quote.</span></div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title" data-t="step2_title">Upload your files</div>
+          <p class="step-desc" data-t="step2_desc">PDF exports from your billing, CRM, and payment processor. Contracts, dashboards — whatever you have. No API access needed.</p>
         </div>
-        <div id="fTVHTN4JsPkNXCeuo4TCzRgoTXSJXvW5" class="widget widget-container accordion-element-container">
-          <div id="VILp1WL0u4govXFgOgVgKODkqbEaNWoO" class="widget widget-container accordion-heading-container">
-            <div id="S7r7vKphMTy9RMmevQdG0WLnZO4uuDFA" class="widget widget-text accordion-heading-text"><span>Who performs the analysis?</span></div>
-            <div id="qgngxcDa1G27E2IbCF1pLePJKN7OzcNB" class="widget widget-container accordion-trigger"></div>
-          </div>
-          <div id="JlhJMv0VygNZ3nBp7uCvdDPhiN0DNHNl" class="widget widget-text accordion-desc-text"><span>Every audit is conducted by a specialized revenue analyst with a manual, structured review process. No automated reports.</span></div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title" data-t="step3_title">We detect real leaks</div>
+          <p class="step-desc" data-t="step3_desc">Our analyst manually cross-references your CRM, billing platform and payment processor across all 8 leak categories.</p>
         </div>
-        <div id="KRbto37QOVHaK8GIoSfui5fZwuvgMA31" class="widget widget-container accordion-element-container">
-          <div id="R6bP4aSi8iEvMqDRLCcGRCheV6deEknd" class="widget widget-container accordion-heading-container">
-            <div id="C68VexixJZo34TAQOhOtTnnZu7rra2nz" class="widget widget-text accordion-heading-text"><span>How is my information protected?</span></div>
-            <div id="rGTAXvoArm7IDnlPpMrRaWruuM3dUxQQ" class="widget widget-container accordion-trigger"></div>
-          </div>
-          <div id="nxW1Lph820iFsvr0pCT7XMw1gMNaoE3G" class="widget widget-text accordion-desc-text"><span>We do not access your systems. We do not store any data. All your files are deleted upon completion of the report. The process is 100% private and manual.</span></div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title" data-t="step4_title">Results in 72 hours</div>
+          <p class="step-desc" data-t="step4_desc">Executive PDF report with findings, estimated recoverable amounts, and clear next steps for your ops or finance team.</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="how-note" data-t="how_note">Fully async. No calls, no integrations, no waiting rooms. Just your files and your report.</p>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="section section-light" id="pricing">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="section-tag" data-t="s_pricing">Pricing</div>
+      <h2 class="section-title" data-t="s_pricing_title">One audit. Full visibility into what you're losing.</h2>
+    </div>
+    <div class="pricing-wrap">
+      <div class="pricing-card">
+        <div class="pricing-label" data-t="pricing_label">Standard Revenue Audit</div>
+        <div class="pricing-title" data-t="pricing_title">Revenue Audit</div>
+        <div class="pricing-subtitle" data-t="pricing_sub">One-time · All 8 leak categories · 72h delivery</div>
+        <div class="pricing-price"><sup>$</sup>899 <span style="font-size:18px;color:rgba(255,255,255,0.5);font-weight:400;">USD</span></div>
+        <div class="pricing-period" data-t="pricing_period">Fixed price — no surprises</div>
+        <hr class="pricing-divider" />
+        <ul class="pricing-features">
+          <li data-t="pf1">Comprehensive analysis of your last 90 days</li>
+          <li data-t="pf2">Review of billing, CRM, payment gateways &amp; subscriptions</li>
+          <li data-t="pf3">Detection of all 8 revenue leak categories</li>
+          <li data-t="pf4">Executive PDF report with findings, evidence &amp; calculations</li>
+          <li data-t="pf5">Actionable recovery recommendations</li>
+          <li data-t="pf6">Delivered within 72 hours of receiving all files</li>
+          <li data-t="pf7">No integrations or system access required</li>
+        </ul>
+        <a href="/form" class="btn" style="display:block;text-align:center;" data-t="btn_start">Start my audit →</a>
+        <div class="pricing-note-text" data-t="pricing_note">Extended scope available: 90 days to 12 months. Contact us for pricing.</div>
+        <div class="pricing-recovery" data-t="pricing_recovery">Companies typically recover 3–12% of annual revenue after their first audit.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECURITY ═══ -->
+<section class="section section-white" id="security">
+  <div class="container">
+    <div class="security-card">
+      <div class="security-inner">
+        <div class="security-left">
+          <div class="section-tag" data-t="s_security">Confidentiality</div>
+          <h2 data-t="security_title">Security &amp;<br>Confidentiality</h2>
+          <p style="margin-top:10px;" data-t="security_sub">Designed for sensitive financial data. Your data remains fully under your control.</p>
+          <p class="security-footer-note" data-t="security_note">We operate under strict internal confidentiality practices.</p>
+        </div>
+        <div>
+          <ul class="security-bullets">
+            <li data-t="sec1">No system access required</li>
+            <li data-t="sec2">No API connections</li>
+            <li data-t="sec3">No persistent data storage</li>
+            <li data-t="sec4">Files used only for audit purposes</li>
+            <li data-t="sec5">Automatic deletion after project completion</li>
+            <li data-t="sec6">Restricted internal access</li>
+            <li data-t="sec7">Private, manual review process</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- FOOTER -->
-<div id="hJiBrHzTfs7aozm2668WX6ymdLDoMWnb" class="widget widget-section">
-  <div class="row">
-    <div class="container">
-      <div id="KCBwufSvIBAKR8s55AqmcByo7DOX3MEc" class="widget widget-text"><h2><a href="/terms" style="color: rgb(255, 255, 255); text-decoration: underline;">Terms of services</a></h2></div>
-      <div id="a0IxITq4bHzbck5PZKb8qONK8etolQxX" class="widget widget-text"><h2><a href="/privacy" style="color: rgb(255, 255, 255); text-decoration: underline;">Privacy policy</a></h2></div>
-      <div id="GGTSsKyAfcFPsQ0pfvp5LyB2kJeOvDSr" class="widget widget-text"><h2>© 2026 RLD — Revenue Leak Detection. All rights reserved.</h2></div>
+<!-- ═══ WHY RLD ═══ -->
+<section class="section section-light" id="why">
+  <div class="container">
+    <div class="section-tag" data-t="s_why">Why RLD</div>
+    <h2 class="section-title" data-t="s_why_title">Why companies choose RLD</h2>
+    <div class="why-grid">
+
+      <div class="why-item">
+        <div class="why-icon">⊙</div>
+        <div class="why-body">
+          <div class="why-title" data-t="why1_title">Independent analysis</div>
+          <p class="why-desc" data-t="why1_desc">No software to sell. No integrations required. No long-term contracts. Just the findings.</p>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon">◈</div>
+        <div class="why-body">
+          <div class="why-title" data-t="why2_title">Specialized focus</div>
+          <p class="why-desc" data-t="why2_desc">Built specifically for billing, CRM, and payment revenue leaks — not general consulting.</p>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon">◎</div>
+        <div class="why-body">
+          <div class="why-title" data-t="why3_title">Actionable outcomes</div>
+          <p class="why-desc" data-t="why3_desc">Every finding includes a quantified impact and clear remediation steps your team can act on immediately.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="why-compat">
+      <span data-t="compat1">✓ Stripe exports</span>
+      <span data-t="compat2">✓ HubSpot exports</span>
+      <span data-t="compat3">✓ Salesforce exports</span>
+      <span data-t="compat4">✓ Chargebee exports</span>
+      <span data-t="compat5">✓ Any billing PDF</span>
+    </div>
+    <div class="why-analyst" data-t="analyst_note">
+      RLD audits are conducted by a revenue analyst with hands-on experience in B2B billing operations and CRM data reconciliation. Every report is reviewed manually — no automated outputs.
     </div>
   </div>
-</div>
+</section>
 
-<!-- Landingi accordion JS (self-contained, no frodo needed) -->
+<!-- ═══ CTA BAND ═══ -->
+<section class="cta-band">
+  <div class="container">
+    <h2 data-t="cta_title">Identify lost revenue<br>before it compounds.</h2>
+    <p data-t="cta_sub">Most companies recover 10–50× the audit fee in the first 90 days. It takes 72 hours to find out if yours will too.</p>
+    <a href="/form" class="btn" data-t="btn_request">Request audit</a>
+    <p class="limited-note" data-t="cta_limited">Limited spaces due to manual capacity.</p>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="faq-header">
+      <div class="section-tag" style="display:inline-block;" data-t="s_faq">FAQ</div>
+      <h2 class="section-title on-dark" style="margin-top:6px;" data-t="s_faq_title">Common questions</h2>
+    </div>
+    <div class="faq-cols">
+      <div class="faq-col-left">
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span data-t="fq1">What files can I upload?</span>
+            <span class="faq-chevron">+</span>
+          </button>
+          <div class="faq-a" data-t="fa1">You can upload PDF reports from your payment platforms, CRM, contracts, billing, or exported dashboards. If your data is in Excel or CSV, export it as PDF first.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span data-t="fq2">Do you guarantee results?</span>
+            <span class="faq-chevron">+</span>
+          </button>
+          <div class="faq-a" data-t="fa2">We guarantee a professional and thorough audit process. Results depend on data quality and completeness. If no discrepancies are found, you receive a report confirming billing accuracy.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span data-t="fq3">Can I send more than one file?</span>
+            <span class="faq-chevron">+</span>
+          </button>
+          <div class="faq-a" data-t="fa3">Yes — you can upload multiple files as long as they cover the 90-day period. Up to 120 pages total across all files for the standard audit.</div>
+        </div>
+
+      </div>
+      <div class="faq-col-right">
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span data-t="fq4">Is there a size limit?</span>
+            <span class="faq-chevron">+</span>
+          </button>
+          <div class="faq-a" data-t="fa4">The standard audit covers up to 120 pages total across all submitted files. If your reports are larger, contact us before purchasing and we'll provide custom pricing.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span data-t="fq5">Who performs the analysis?</span>
+            <span class="faq-chevron">+</span>
+          </button>
+          <div class="faq-a" data-t="fa5">Every audit is conducted by a specialized revenue analyst with a manual, structured review process. No automated reports — a real person reviews your data.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span data-t="fq6">How is my information protected?</span>
+            <span class="faq-chevron">+</span>
+          </button>
+          <div class="faq-a" data-t="fa6">We do not access your systems. We do not store any data. All files are permanently deleted upon report delivery. The process is 100% private and manual.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">RLD<span>.</span></div>
+    <ul class="footer-links">
+      <li><a href="/form"    data-t="footer_audit">Request Audit</a></li>
+      <li><a href="/terms"   data-t="footer_terms">Terms of Service</a></li>
+      <li><a href="/privacy" data-t="footer_privacy">Privacy Policy</a></li>
+      <li><a href="mailto:contact@rldaudit.com">contact@rldaudit.com</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 RLD — Revenue Leak Detection. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
 <script>
-$(document).ready(function() {
-  $('.widget-accordion').each(function() {
-    var $accordion = $(this);
-    $accordion.find('.accordion-element-container').each(function() {
-      var $el = $(this);
-      var $desc = $el.find('.accordion-desc-text');
-      var $trigger = $el.find('.accordion-trigger');
-      $desc.hide();
-      $el.find('.accordion-heading-container').css('cursor','pointer').on('click', function() {
-        var isOpen = $desc.is(':visible');
-        // close all in this accordion
-        $accordion.find('.accordion-desc-text').slideUp(200);
-        $accordion.find('.accordion-trigger').removeClass('active');
-        if (!isOpen) {
-          $desc.slideDown(200);
-          $trigger.addClass('active');
-        }
-      });
+document.addEventListener('DOMContentLoaded', function() {
+
+  /* ── FAQ ── */
+  document.querySelectorAll('.faq-q').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
     });
   });
-});
-</script>
 
+  /* ── LANG TOGGLE ── */
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      setLang(btn.getAttribute('data-lang'));
+    });
+  });
+
+});
+
+/* ── i18n ── */
+const T = {
+  en: {
+    nav_problem:'The problem', nav_how:'How it works', nav_pricing:'Pricing', nav_faq:'FAQ',
+    hero_eyebrow:'Revenue Leak Detection · SaaS Audit',
+    hero_h1:'Hidden revenue leaks cost<br>mid-market companies $500K/year.<br>We find yours in 72h.',
+    hero_sub:'We analyze your CRM, billing, and payment data to detect revenue loss companies typically miss — without integrations or system access.',
+    hero_note:'Most billing leaks go unnoticed for 2+ years before someone looks.',
+    btn_request:'Request audit', btn_start:'Start my audit →',
+    check_findings:'Typical findings: 3–12% recoverable revenue',
+    check_no_int:'No integrations required', check_72h:'Results in 72h',
+    hero_badge:'Fixed price: <strong>$899 USD</strong> · All 8 leak categories · 72h delivery',
+    s_overview:'Overview', s_overview_title:'From hidden errors to measurable recovery',
+    s_overview_sub:'Most leaks happen without anyone noticing. We find them before they compound.',
+    col1_label:'The problem', col1_title:'Companies lose money without realizing it',
+    col1_i1:'Customers paying less than contracted', col1_i2:'MRR errors going undetected',
+    col1_i3:'Duplicate charges', col1_i4:'Unrecorded churn', col1_i5:'Incorrectly applied discounts',
+    col2_label:'What we analyze', col2_title:'8 leak categories, every audit',
+    col2_i1:'Billing inconsistencies', col2_i2:'MRR crosscheck errors',
+    col2_i3:'Irregular payment cycles', col2_i4:'Silent churn (unpaid, still active)',
+    col2_i5:'Duplicate charges', col2_i6:'Leaks in upgrades / downgrades',
+    col2_i7:'FX rate mismatches', col2_i8:'Chargebacks not managed',
+    col3_label:'What you receive', col3_title:'An actionable report, not a spreadsheet',
+    col3_i1:'Every leak flagged with source evidence', col3_i2:'Estimated recoverable amount per finding',
+    col3_i3:'Impact analysis', col3_i4:'Practical recommendations',
+    col3_i5:'Remediation roadmap', col3_i6:'Premium PDF report',
+    s_how:'Process', s_how_title:'How it works',
+    step1_title:'Send us your information', step1_desc:'Company, contact details and context about your billing stack. Takes 5 minutes.',
+    step2_title:'Upload your files', step2_desc:'PDF exports from your billing, CRM, and payment processor. No API access needed.',
+    step3_title:'We detect real leaks', step3_desc:'Our analyst manually cross-references your CRM, billing platform and payment processor across all 8 leak categories.',
+    step4_title:'Results in 72 hours', step4_desc:'Executive PDF report with findings, estimated recoverable amounts, and clear next steps.',
+    how_note:'Fully async. No calls, no integrations, no waiting rooms. Just your files and your report.',
+    s_pricing:'Pricing', s_pricing_title:"One audit. Full visibility into what you're losing.",
+    pricing_label:'Standard Revenue Audit', pricing_title:'Revenue Audit',
+    pricing_sub:'One-time · All 8 leak categories · 72h delivery',
+    pricing_period:'Fixed price — no surprises',
+    pf1:'Comprehensive analysis of your last 90 days',
+    pf2:'Review of billing, CRM, payment gateways &amp; subscriptions',
+    pf3:'Detection of all 8 revenue leak categories',
+    pf4:'Executive PDF report with findings, evidence &amp; calculations',
+    pf5:'Actionable recovery recommendations',
+    pf6:'Delivered within 72 hours of receiving all files',
+    pf7:'No integrations or system access required',
+    pricing_note:'Extended scope available: 90 days to 12 months. Contact us for pricing.',
+    pricing_recovery:'Companies typically recover 3–12% of annual revenue after their first audit.',
+    s_security:'Confidentiality', security_title:'Security &amp;<br>Confidentiality',
+    security_sub:'Designed for sensitive financial data. Your data remains fully under your control.',
+    security_note:'We operate under strict internal confidentiality practices.',
+    sec1:'No system access required', sec2:'No API connections',
+    sec3:'No persistent data storage', sec4:'Files used only for audit purposes',
+    sec5:'Automatic deletion after project completion', sec6:'Restricted internal access',
+    sec7:'Private, manual review process',
+    s_why:'Why RLD', s_why_title:'Why companies choose RLD',
+    why1_title:'Independent analysis', why1_desc:'No software to sell. No integrations required. No long-term contracts. Just the findings.',
+    why2_title:'Specialized focus', why2_desc:'Built specifically for billing, CRM, and payment revenue leaks — not general consulting.',
+    why3_title:'Actionable outcomes', why3_desc:'Every finding includes a quantified impact and clear remediation steps your team can act on immediately.',
+    compat1:'✓ Stripe exports', compat2:'✓ HubSpot exports', compat3:'✓ Salesforce exports',
+    compat4:'✓ Chargebee exports', compat5:'✓ Any billing PDF',
+    analyst_note:'RLD audits are conducted by a revenue analyst with hands-on experience in B2B billing operations and CRM data reconciliation. Every report is reviewed manually — no automated outputs.',
+    cta_title:'Identify lost revenue<br>before it compounds.',
+    cta_sub:'Most companies recover 10–50× the audit fee in the first 90 days. It takes 72 hours to find out if yours will too.',
+    cta_limited:'Limited spaces due to manual capacity.',
+    s_faq:'FAQ', s_faq_title:'Common questions',
+    fq1:'What files can I upload?', fa1:'You can upload PDF reports from your payment platforms, CRM, contracts, billing, or exported dashboards. If your data is in Excel or CSV, export it as PDF first.',
+    fq2:'Do you guarantee results?', fa2:'We guarantee a professional and thorough audit process. Results depend on data quality and completeness. If no discrepancies are found, you receive a report confirming billing accuracy.',
+    fq3:'Can I send more than one file?', fa3:'Yes — you can upload multiple files as long as they cover the 90-day period. Up to 120 pages total across all files for the standard audit.',
+    fq4:'Is there a size limit?', fa4:'The standard audit covers up to 120 pages total across all submitted files. If your reports are larger, contact us before purchasing and we\'ll provide custom pricing.',
+    fq5:'Who performs the analysis?', fa5:'Every audit is conducted by a specialized revenue analyst with a manual, structured review process. No automated reports — a real person reviews your data.',
+    fq6:'How is my information protected?', fa6:'We do not access your systems. We do not store any data. All files are permanently deleted upon report delivery. The process is 100% private and manual.',
+    footer_audit:'Request Audit', footer_terms:'Terms of Service', footer_privacy:'Privacy Policy'
+  },
+  es: {
+    nav_problem:'El problema', nav_how:'Cómo funciona', nav_pricing:'Precio', nav_faq:'Preguntas frecuentes',
+    hero_eyebrow:'Detección de Fugas de Revenue · Auditoría SaaS',
+    hero_h1:'Las fugas de revenue ocultas<br>le cuestan $500K/año a empresas medianas.<br>Las encontramos en 72h.',
+    hero_sub:'Analizamos tu CRM, facturación y datos de pago para detectar la pérdida de ingresos que las empresas suelen ignorar — sin integraciones ni acceso a sistemas.',
+    hero_note:'La mayoría de las fugas de facturación pasan desapercibidas más de 2 años antes de que alguien las busque.',
+    btn_request:'Solicitar auditoría', btn_start:'Iniciar mi auditoría →',
+    check_findings:'Hallazgos típicos: 3–12% de revenue recuperable',
+    check_no_int:'Sin integraciones requeridas', check_72h:'Resultados en 72h',
+    hero_badge:'Precio fijo: <strong>$899 USD</strong> · Las 8 categorías · Entrega en 72h',
+    s_overview:'Panorama general', s_overview_title:'De errores ocultos a recuperación medible',
+    s_overview_sub:'La mayoría de las fugas ocurren sin que nadie lo note. Las encontramos antes de que se acumulen.',
+    col1_label:'El problema', col1_title:'Las empresas pierden dinero sin darse cuenta',
+    col1_i1:'Clientes pagando menos de lo contratado', col1_i2:'Errores de MRR sin detectar',
+    col1_i3:'Cargos duplicados', col1_i4:'Churn no registrado', col1_i5:'Descuentos mal aplicados',
+    col2_label:'Qué analizamos', col2_title:'8 categorías de fuga, en cada auditoría',
+    col2_i1:'Inconsistencias de facturación', col2_i2:'Errores en cruce de MRR',
+    col2_i3:'Ciclos de pago irregulares', col2_i4:'Silent churn (sin pagar, aún activo)',
+    col2_i5:'Cargos duplicados', col2_i6:'Fugas en upgrades / downgrades',
+    col2_i7:'Discrepancias en tipo de cambio', col2_i8:'Chargebacks no gestionados',
+    col3_label:'Lo que recibes', col3_title:'Un reporte para actuar, no para archivar',
+    col3_i1:'Cada fuga señalada con evidencia de fuente', col3_i2:'Monto recuperable estimado por hallazgo',
+    col3_i3:'Análisis de impacto', col3_i4:'Recomendaciones prácticas',
+    col3_i5:'Hoja de ruta de remediación', col3_i6:'Reporte PDF premium',
+    s_how:'Proceso', s_how_title:'Cómo funciona',
+    step1_title:'Envíanos tu información', step1_desc:'Empresa, datos de contacto y contexto sobre tu stack de facturación. Tarda 5 minutos.',
+    step2_title:'Sube tus archivos', step2_desc:'Exportaciones PDF desde tu billing, CRM y procesador de pagos. Sin acceso API necesario.',
+    step3_title:'Detectamos fugas reales', step3_desc:'Nuestro analista cruza manualmente tu CRM, plataforma de billing y procesador de pagos en las 8 categorías de fuga.',
+    step4_title:'Resultados en 72 horas', step4_desc:'Reporte PDF ejecutivo con hallazgos, montos recuperables estimados y próximos pasos claros.',
+    how_note:'100% async. Sin llamadas, sin integraciones, sin salas de espera. Solo tus archivos y tu reporte.',
+    s_pricing:'Precio', s_pricing_title:'Una auditoría. Visibilidad total de lo que estás perdiendo.',
+    pricing_label:'Auditoría de Revenue Estándar', pricing_title:'Auditoría de Revenue',
+    pricing_sub:'Pago único · Las 8 categorías de fuga · Entrega en 72h',
+    pricing_period:'Precio fijo — sin sorpresas',
+    pf1:'Análisis completo de tus últimos 90 días',
+    pf2:'Revisión de billing, CRM, pasarelas de pago y suscripciones',
+    pf3:'Detección de las 8 categorías de fuga de revenue',
+    pf4:'Reporte PDF ejecutivo con hallazgos, evidencia y cálculos',
+    pf5:'Recomendaciones de recuperación accionables',
+    pf6:'Entregado dentro de las 72 horas de recibir todos los archivos',
+    pf7:'Sin integraciones ni acceso a sistemas requerido',
+    pricing_note:'Alcance extendido disponible: de 90 días a 12 meses. Contáctanos para precio personalizado.',
+    pricing_recovery:'Las empresas típicamente recuperan 3–12% de sus ingresos anuales tras su primera auditoría.',
+    s_security:'Confidencialidad', security_title:'Seguridad y<br>Confidencialidad',
+    security_sub:'Diseñado para datos financieros sensibles. Tus datos permanecen totalmente bajo tu control.',
+    security_note:'Operamos bajo prácticas internas estrictas de confidencialidad.',
+    sec1:'Sin acceso a sistemas requerido', sec2:'Sin conexiones API',
+    sec3:'Sin almacenamiento persistente de datos', sec4:'Archivos usados exclusivamente para la auditoría',
+    sec5:'Eliminación automática al completar el proyecto', sec6:'Acceso interno restringido',
+    sec7:'Proceso de revisión privado y manual',
+    s_why:'Por qué RLD', s_why_title:'Por qué las empresas eligen RLD',
+    why1_title:'Análisis independiente', why1_desc:'Sin software que vender. Sin integraciones requeridas. Sin contratos a largo plazo. Solo los hallazgos.',
+    why2_title:'Enfoque especializado', why2_desc:'Construido específicamente para fugas de revenue en billing, CRM y pagos — no consultoría general.',
+    why3_title:'Resultados accionables', why3_desc:'Cada hallazgo incluye impacto cuantificado y pasos claros de remediación que tu equipo puede ejecutar de inmediato.',
+    compat1:'✓ Exportaciones Stripe', compat2:'✓ Exportaciones HubSpot', compat3:'✓ Exportaciones Salesforce',
+    compat4:'✓ Exportaciones Chargebee', compat5:'✓ Cualquier PDF de billing',
+    analyst_note:'Las auditorías RLD son realizadas por un analista de revenue con experiencia práctica en operaciones de billing B2B y conciliación de datos CRM. Cada reporte se revisa manualmente — sin salidas automatizadas.',
+    cta_title:'Identifica el revenue perdido<br>antes de que se acumule.',
+    cta_sub:'La mayoría de las empresas recuperan 10–50× el costo de la auditoría en los primeros 90 días. Se tarda 72 horas en saberlo.',
+    cta_limited:'Espacios limitados por capacidad manual.',
+    s_faq:'Preguntas frecuentes', s_faq_title:'Dudas comunes',
+    fq1:'¿Qué archivos puedo subir?', fa1:'Puedes subir reportes PDF de tus plataformas de pago, CRM, contratos, billing, o dashboards exportados. Si tus datos están en Excel o CSV, expórtalos como PDF primero.',
+    fq2:'¿Garantizan resultados?', fa2:'Garantizamos un proceso de auditoría profesional y exhaustivo. Los resultados dependen de la calidad y completitud de los datos. Si no se encuentran discrepancias, recibes un reporte confirmando la exactitud de la facturación.',
+    fq3:'¿Puedo enviar más de un archivo?', fa3:'Sí — puedes subir múltiples archivos siempre que cubran el período de 90 días. Hasta 120 páginas en total entre todos los archivos para la auditoría estándar.',
+    fq4:'¿Hay un límite de tamaño?', fa4:'La auditoría estándar cubre hasta 120 páginas en total entre todos los archivos enviados. Si tus reportes son más grandes, contáctanos antes de comprar y te daremos precio personalizado.',
+    fq5:'¿Quién realiza el análisis?', fa5:'Cada auditoría es realizada por un analista de revenue especializado con un proceso de revisión manual y estructurado. Sin reportes automatizados — una persona real revisa tus datos.',
+    fq6:'¿Cómo se protege mi información?', fa6:'No accedemos a tus sistemas. No almacenamos ningún dato. Todos los archivos se eliminan permanentemente al entregar el reporte. El proceso es 100% privado y manual.',
+    footer_audit:'Solicitar Auditoría', footer_terms:'Términos de Servicio', footer_privacy:'Política de Privacidad'
+  }
+};
+
+let lang = 'en';
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (T[l][key] !== undefined) el.innerHTML = T[l][key];
+  });
+}
+setLang('en');
+</script>
 </body>
 </html>
